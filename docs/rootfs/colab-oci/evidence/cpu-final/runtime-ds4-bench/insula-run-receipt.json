@@ -1,0 +1,38 @@
+{
+  "rootfs": "/content/layered-root-runtime-final",
+  "bundle": {
+    "schema_version": 1,
+    "source_commit": "fc80bd695da76ee14bcb86820bf900a5cdfda806",
+    "source_archive_sha256": "1c640b28efcc685778beb131b53f86ce06facf851e7956c93dced29fd7fd71f3",
+    "base_image": "nvidia/cuda:13.0.3-devel-ubuntu24.04@sha256:b7ae301dea2c162444795462ce17a05f6a516e5a75944b57af5b88540a1a2266",
+    "platform": "linux/amd64",
+    "cuda_arch": "sm_80",
+    "cpu_flag": "-march=x86-64",
+    "weights_included": false,
+    "build_argv": [
+      "make",
+      "-j16",
+      "cuda",
+      "CUDA_ARCH=sm_80",
+      "NATIVE_CPU_FLAG=-march=x86-64"
+    ],
+    "bundle_kind": "selected-component-layers",
+    "source_rootfs_image": "sha256:03a4d77a509f59a204747661ef7207232c846cb1146077073ef87116009d7462",
+    "packaging_recipe_sha256": "45a292a8d4465c57c026ffda647e82ff77a9c08a740601062e9313b0181e0721",
+    "component_recipe_sha256": "6db9bd0395ac4e287feae9e05c859f30c30df07122c0c681a75c51a4fea5d83f"
+  },
+  "argv": [
+    "/opt/ds4/bin/ds4-bench",
+    "--help"
+  ],
+  "work": "/content/runtime-work-final",
+  "weights": "/content/weights-empty",
+  "outputs": "/content/layered-evidence-final/runtime-ds4-bench",
+  "devices": [],
+  "driver_libraries": {},
+  "network": "isolated",
+  "rootfs_access": "read-only",
+  "proc": "host proc read-only; host PID namespace",
+  "limitations": "Shares the host kernel. This is not a hostile-code security boundary.",
+  "returncode": 0
+}

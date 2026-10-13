@@ -1,0 +1,246 @@
+{
+  "revision": "v3 final provenance metadata",
+  "docker_image": "ds4-a100-build:fc80bd6-cu130",
+  "network": "none",
+  "rootfs": "read-only except declared mounts",
+  "packaged_vendor": "read-only; copied into writable /tmp",
+  "bazel_version": "9.2.0",
+  "rules_oci_version": "2.3.3",
+  "repository_cache": "disabled",
+  "repo_contents_cache": "disabled by empty repository_cache default",
+  "disk_cache": "disabled",
+  "remote_cache": "disabled",
+  "output_roots": [
+    "/tmp/ds4-bazel-layer-bundle-20261011/real-outputs-v3/first",
+    "/tmp/ds4-bazel-layer-bundle-20261011/real-outputs-v3/second"
+  ],
+  "fresh_actions_per_run": 41,
+  "raw_compressed_bytes_preserved": true,
+  "portable_tools_layer_sha256": "529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+  "application_layer_bytes": {
+    "app-ds4": 27140350,
+    "app-ds4-bench": 27107038,
+    "app-ds4-server": 27276030,
+    "app-ds4-eval": 27178484,
+    "app-ds4-agent": 27283026
+  },
+  "all_application_layer_bytes": 135984928,
+  "single_benchmark_application_layer_bytes": 27107038,
+  "images": {
+    "runtime": {
+      "manifest_digest": "sha256:31f31286f7416674c87b011dca06b005e9fd074b6334bad512967dc21e9e4ee6",
+      "repeat_manifest_digest": "sha256:31f31286f7416674c87b011dca06b005e9fd074b6334bad512967dc21e9e4ee6",
+      "layer_count": 8,
+      "layers": [
+        {
+          "size": 94673310,
+          "digest": "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 423101706,
+          "digest": "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27140350,
+          "digest": "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27107038,
+          "digest": "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27276030,
+          "digest": "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27178484,
+          "digest": "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27283026,
+          "digest": "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 1581,
+          "digest": "sha256:6a37d832e19c452e5d8bdbe6b32d391b9202d965f1e515c975cb16791f9fb977",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        }
+      ],
+      "host_readable_blob_symlinks": true,
+      "configuration_verified": {
+        "architecture": "amd64",
+        "os": "linux",
+        "working_directory": "/work",
+        "entrypoint": [
+          "/bin/bash"
+        ]
+      }
+    },
+    "build": {
+      "manifest_digest": "sha256:0d87a0331528504a8663c3b2486fe0204eff69f5ade4ed1b4cd11756dd28650b",
+      "repeat_manifest_digest": "sha256:0d87a0331528504a8663c3b2486fe0204eff69f5ade4ed1b4cd11756dd28650b",
+      "layer_count": 11,
+      "layers": [
+        {
+          "size": 94673310,
+          "digest": "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 423101706,
+          "digest": "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 158654920,
+          "digest": "sha256:393d5b7e240164748a195aa582485dcfa71770c027e22ed81376777d5da98b23",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 105505898,
+          "digest": "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 16086290,
+          "digest": "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27140350,
+          "digest": "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27107038,
+          "digest": "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27276030,
+          "digest": "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27178484,
+          "digest": "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27283026,
+          "digest": "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 1581,
+          "digest": "sha256:6a37d832e19c452e5d8bdbe6b32d391b9202d965f1e515c975cb16791f9fb977",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        }
+      ],
+      "host_readable_blob_symlinks": true,
+      "configuration_verified": {
+        "architecture": "amd64",
+        "os": "linux",
+        "working_directory": "/work",
+        "entrypoint": [
+          "/bin/bash"
+        ]
+      }
+    },
+    "seed": {
+      "manifest_digest": "sha256:db7f8fb71d11daf785f0161fe8fbad3f74a93d235d5397da4e80da76abd007eb",
+      "repeat_manifest_digest": "sha256:db7f8fb71d11daf785f0161fe8fbad3f74a93d235d5397da4e80da76abd007eb",
+      "layer_count": 12,
+      "layers": [
+        {
+          "size": 94673310,
+          "digest": "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 423101706,
+          "digest": "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 158654920,
+          "digest": "sha256:393d5b7e240164748a195aa582485dcfa71770c027e22ed81376777d5da98b23",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 105505898,
+          "digest": "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 16086290,
+          "digest": "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27140350,
+          "digest": "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27107038,
+          "digest": "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27276030,
+          "digest": "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27178484,
+          "digest": "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 27283026,
+          "digest": "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 1581,
+          "digest": "sha256:6a37d832e19c452e5d8bdbe6b32d391b9202d965f1e515c975cb16791f9fb977",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        },
+        {
+          "size": 38880071,
+          "digest": "sha256:4db806b11970a55c741c2a058cf646de9078c0e6d06050b47fb57aa59b5b2119",
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+        }
+      ],
+      "host_readable_blob_symlinks": true,
+      "configuration_verified": {
+        "architecture": "amd64",
+        "os": "linux",
+        "working_directory": "/work",
+        "entrypoint": [
+          "/bin/bash"
+        ]
+      }
+    }
+  },
+  "changed_layers_vs_v2": {
+    "runtime": [
+      "metadata"
+    ],
+    "build": [
+      "metadata"
+    ],
+    "seed": [
+      "metadata"
+    ]
+  },
+  "metadata_bytes": 1581
+}

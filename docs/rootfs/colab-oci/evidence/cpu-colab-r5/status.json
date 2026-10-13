@@ -1,0 +1,99 @@
+{
+  "phase": "complete",
+  "mode": "run",
+  "detail": {
+    "cpu_only": true,
+    "mode": "run",
+    "no_remote_rebuild": true,
+    "source_archive_sha256": "1c640b28efcc685778beb131b53f86ce06facf851e7956c93dced29fd7fd71f3"
+  },
+  "records": [
+    {
+      "name": "build-ds4",
+      "seconds": 0.2191962980000426,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "build-ds4-bench",
+      "seconds": 0.21523291299990888,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "build-ds4-server",
+      "seconds": 0.21486513800005014,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "build-ds4-eval",
+      "seconds": 0.21486980399981803,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "build-ds4-agent",
+      "seconds": 0.21493303099987315,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "toolchain-nvcc-version",
+      "seconds": 0.1146501549999357,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "toolchain-gcc-version",
+      "seconds": 0.11458184399998572,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "readonly-root",
+      "seconds": 0.2650860339999781,
+      "returncode": 0,
+      "expected_returncode": 0
+    }
+  ],
+  "restores": {
+    "build": {
+      "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:863159635b37e2280346657114583eb0835697b8c97cd84366bd2c5a2b8343bc",
+      "rootfs": "/content/layered-root-build-r5",
+      "records": [
+        {
+          "name": "metadata",
+          "seconds": 1.1857212939999044
+        },
+        {
+          "name": "download-and-verify",
+          "seconds": 15.41448719799996,
+          "bytes": 938251303,
+          "cached_layers": 0
+        },
+        {
+          "name": "pack",
+          "seconds": 6.972095865000028
+        },
+        {
+          "name": "materialize-and-verify",
+          "seconds": 39.06617508499994
+        }
+      ],
+      "layer_digests": [
+        "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+        "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+        "sha256:9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+        "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+        "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+        "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+        "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+        "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+        "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+        "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+        "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f"
+      ]
+    }
+  }
+}

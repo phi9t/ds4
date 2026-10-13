@@ -1,0 +1,30 @@
+{
+  "changed": [
+    "source",
+    "app-ds4-bench",
+    "metadata"
+  ],
+  "unchanged": [
+    "os",
+    "cuda-runtime",
+    "compiler",
+    "bazel-tools",
+    "app-ds4",
+    "app-ds4-server",
+    "app-ds4-eval",
+    "app-ds4-agent"
+  ],
+  "new_sha256": {
+    "os": "d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+    "cuda-runtime": "c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+    "compiler": "9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+    "bazel-tools": "529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+    "source": "cfa9b8fdf2a66d2da7cffe91802a28660e73065d367c5b97000dec6207446387",
+    "app-ds4": "02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+    "app-ds4-bench": "5f00ddf1ec1e22d719d0f4af8ef66789b47f9cba6b1221f558374deb302faa39",
+    "app-ds4-server": "fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+    "app-ds4-eval": "d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+    "app-ds4-agent": "421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+    "metadata": "6571452c6de13a3c1c8e4620a48b9eee920b21c6d85fe18bc04ecd4eccf364c5"
+  }
+}

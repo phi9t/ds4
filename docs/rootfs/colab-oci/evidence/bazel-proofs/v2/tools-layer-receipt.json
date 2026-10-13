@@ -1,0 +1,22 @@
+{
+  "file": "/tmp/ds4-bazel-layer-bundle-20261011/bazel-tools.tar.gz",
+  "bytes": 105505898,
+  "sha256": "529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+  "excluded": [
+    "vendor/bazel-external",
+    "inputs",
+    "outputbase",
+    "repository-cache",
+    "fixtures"
+  ],
+  "recipe_files": [
+    "MODULE.bazel",
+    "MODULE.bazel.lock",
+    "BUILD.bazel",
+    "compose-offline.sh",
+    "link-layers.sh",
+    "verify-layout.py",
+    "README.md",
+    "acquisition.json"
+  ]
+}

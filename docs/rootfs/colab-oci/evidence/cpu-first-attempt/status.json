@@ -1,0 +1,161 @@
+{
+  "phase": "failed",
+  "detail": {
+    "error": "Traceback (most recent call last):\n  File \"/content/cpu_layered_test.py\", line 58, in <module>\n    logs=run('inspect-sm80',build,work,['/usr/local/cuda/bin/cuobjdump','--dump-sass','/work/probe.cubin'])\n  File \"/content/cpu_layered_test.py\", line 30, in run\n    if r.returncode!=expected:raise RuntimeError(name+' failed')\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: inspect-sm80 failed\n"
+  },
+  "records": [
+    {
+      "name": "runtime-ds4",
+      "seconds": 2.5229726019999816,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "runtime-ds4-bench",
+      "seconds": 0.21486578100007137,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "runtime-ds4-server",
+      "seconds": 0.21592010600011236,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "runtime-ds4-eval",
+      "seconds": 0.21654292999983227,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "runtime-ds4-agent",
+      "seconds": 0.2149094530000184,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "compile-sm80",
+      "seconds": 1.9713179480002054,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "inspect-sm80",
+      "seconds": 0.11446640999997726,
+      "returncode": 1,
+      "expected_returncode": 0
+    }
+  ],
+  "restores": {
+    "build": {
+      "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:0d87a0331528504a8663c3b2486fe0204eff69f5ade4ed1b4cd11756dd28650b",
+      "rootfs": "/content/layered-root-build",
+      "records": [
+        {
+          "name": "metadata",
+          "seconds": 0.9534714249998615
+        },
+        {
+          "name": "download-and-verify",
+          "seconds": 13.948255030999917,
+          "bytes": 934008633,
+          "cached_layers": 0
+        },
+        {
+          "name": "pack",
+          "seconds": 12.150750919000075
+        },
+        {
+          "name": "materialize-and-verify",
+          "seconds": 32.96379563400001
+        }
+      ],
+      "layer_digests": [
+        "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+        "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+        "sha256:393d5b7e240164748a195aa582485dcfa71770c027e22ed81376777d5da98b23",
+        "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+        "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+        "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+        "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+        "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+        "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+        "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+        "sha256:6a37d832e19c452e5d8bdbe6b32d391b9202d965f1e515c975cb16791f9fb977"
+      ]
+    },
+    "runtime": {
+      "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:31f31286f7416674c87b011dca06b005e9fd074b6334bad512967dc21e9e4ee6",
+      "rootfs": "/content/layered-root-runtime",
+      "records": [
+        {
+          "name": "metadata",
+          "seconds": 0.868747692999932
+        },
+        {
+          "name": "download-and-verify",
+          "seconds": 14.323020732999794,
+          "bytes": 653761525,
+          "cached_layers": 0
+        },
+        {
+          "name": "pack",
+          "seconds": 1.9390418810000938
+        },
+        {
+          "name": "materialize-and-verify",
+          "seconds": 19.517819615000008
+        }
+      ],
+      "layer_digests": [
+        "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+        "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+        "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+        "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+        "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+        "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+        "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+        "sha256:6a37d832e19c452e5d8bdbe6b32d391b9202d965f1e515c975cb16791f9fb977"
+      ]
+    },
+    "seed": {
+      "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:db7f8fb71d11daf785f0161fe8fbad3f74a93d235d5397da4e80da76abd007eb",
+      "rootfs": "/content/layered-root-seed",
+      "records": [
+        {
+          "name": "metadata",
+          "seconds": 0.8807732640000268
+        },
+        {
+          "name": "download-and-verify",
+          "seconds": 5.741954117999967,
+          "bytes": 38880071,
+          "cached_layers": 11
+        },
+        {
+          "name": "pack",
+          "seconds": 5.010429104999957
+        },
+        {
+          "name": "materialize-and-verify",
+          "seconds": 33.71654952499989
+        }
+      ],
+      "layer_digests": [
+        "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+        "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+        "sha256:393d5b7e240164748a195aa582485dcfa71770c027e22ed81376777d5da98b23",
+        "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+        "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+        "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+        "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+        "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+        "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+        "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+        "sha256:6a37d832e19c452e5d8bdbe6b32d391b9202d965f1e515c975cb16791f9fb977",
+        "sha256:4db806b11970a55c741c2a058cf646de9078c0e6d06050b47fb57aa59b5b2119"
+      ]
+    }
+  }
+}

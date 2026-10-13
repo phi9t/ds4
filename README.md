@@ -2,17 +2,11 @@
   <img src="logo.svg" alt="DwarfStar logo" width="220">
 </p>
 
-**DwarfStar** aims to be the best way to run a few excellent large
-language models on consumer hardware (that is, hardware that people
-can actually own). To reach this goal, we are building
-a small native inference engine optimized first for
-**DeepSeek V4 Flash** (including the experimental vision model),
-**DeepSeek V4.1 Flash** (Metal, and text inference on CUDA),
-and additionally **GLM 5.2 and 5.3**, **GLM 5.3 Flash** and
-**DeepSeek V4 PRO**, and **Qwen3.8 Flash Next** (Metal and CUDA). The code is self-contained and
-deliberately narrow, not a general GGUF runner: you need to use the
-GGUF files the project produces, that are part of the project
-itself.
+**DwarfStar** is a small native inference engine optimized first for
+**DeepSeek V4 Flash**. This fork is focused on NVIDIA CUDA execution and the
+CPU reference/debug path. The code is self-contained and deliberately narrow,
+not a general GGUF runner: you need to use the GGUF files the project produces,
+that are part of the project itself.
 
 We test things in integration: model loading, prompt rendering,
 tool calls, KV state, the HTTP server, and the coding agent are built and tested together.
@@ -20,26 +14,29 @@ The repository also includes tools and data for GGUF, imatrix, quality, and spee
 
 ## Supported hardware
 
-* **Metal**, the primary target, on Macs with 96 GB or more. Smaller machines
-  can use SSD streaming. SSD streaming is also needed in order to run very
-  large models such as full GLM 5.x (not Flash) on 128GB systems.
-* **NVIDIA CUDA**, the DGX Spark is our main gaol. DwarfStar also supports multi-GPU systems that are not supported by other backends, for instance it can run DeepSeek v4 Flash on Ada Lovelace cards.
-* **ROCm** on Strix Halo systems such as the Framework Desktop.
+* **NVIDIA CUDA**, including multi-GPU systems and DGX Spark. Machines that
+  cannot fit the model in VRAM can use SSD streaming.
+* **CPU-only** builds are available as a reference/debug oracle, not as a
+  production target.
 
 This project would not exist without **llama.cpp and GGML**, make sure to read
 the acknowledgements section, a big thank you to Georgi Gerganov and all the
 other contributors.
 
-**Model support is intentionally opportunistic**. The project follows the best open
-weights for useful local machine sizes, especially 128 GB laptops and 256/512 GB
-workstations. A model may be removed when a better replacement arrives.
+**Model support is intentionally opportunistic**. The project follows the best
+open weights for useful local CUDA machines. A model may be removed when a
+better replacement arrives.
 
 # So, what can I do with this software?
 
-* You can run a very capable models in your consumer hardware, a MacBook, a DGX Spark, or a Strix Halo for example. Even if you have not enough RAM, with SSD streaming, you can run it at a decent speed.
+* You can run very capable models on CUDA hardware, from a single DGX Spark to
+  an 8-GPU server. Even without enough VRAM, SSD streaming can run the model at
+  a decent speed.
 * You can use multiple CUDA cards as a multi-user LLM server. Ada Lovelace, including L40S, is supported: newer models can run here even when their other inference implementations require newer GPUs. Our eight-L40S Flash setup has reached about 126 t/s aggregate generation with 16 sessions.
-* Using two 128 GB Macs connected with RDMA, you can run 4-bit DeepSeek Flash or GLM 5.3 Flash with tensor parallelism. Larger GLM 5.2 quants need larger machines, such as Mac Studios.
-* You can also use pipeline paralellism to glue together multiple systems to sum their RAM and run larger models.
+* Using multiple CUDA GPUs with RDMA, you can run 4-bit DeepSeek Flash or GLM
+  with tensor parallelism.
+* You can also use pipeline parallelism to glue together multiple systems to
+  sum their VRAM and run larger models.
 
 ## Motivations
 
@@ -87,15 +84,16 @@ git clone https://github.com/antirez/ds4.git
 cd ds4
 ```
 
-Choose your build. The platform guides cover prerequisites, memory sizing,
-and hardware-specific setups:
+This fork builds through Bazel inside the repo-local bwrap rootfs:
 
-| Platform guide | Build |
-| --- | --- |
-| [Metal on Apple Silicon](docs/METAL.md) | `make` |
-| [DGX Spark](docs/DGX_SPARK.md) | `make cuda-spark` |
-| [Strix Halo / Framework Desktop](docs/STRIX_HALO.md) | `make strix-halo` |
-| [One or more CUDA cards, including Ada/L40S](docs/CUDA_MULTI_GPU.md) | `make cuda-generic` |
+```sh
+scripts/rootfs/build_rootfs.sh
+scripts/ds4 bazel -- build --config=cuda //:ds4
+scripts/ds4 bazel -- build --//:backend=cpu //:ds4
+```
+
+The pinned Colab OCI workflow, shared rootfs package, CPU admission check, and
+A100 gate are documented in [docs/rootfs/colab-oci](docs/rootfs/colab-oci/README.md).
 
 For a first run on a 96 or 128 GB machine, download DeepSeek V4 Flash Q2:
 
@@ -106,7 +104,30 @@ For a first run on a 96 or 128 GB machine, download DeepSeek V4 Flash Q2:
 Downloads go in `gguf/`. Repeat the command to resume an interrupted download.
 Leave memory for the context and runtime buffers as well as the model.
 See [other models](docs/MODELS.md) or use [SSD streaming](docs/SSD_STREAMING.md)
-on a smaller Mac.
+on a smaller CUDA system.
+
+### Build identity and one-command verify
+
+Every binary is stamped with the backend, GPU arch, CUDA version, and git SHA
+that produced it, because a CPU build and every CUDA target share the same
+`./ds4` filename. Query it to confirm which build you are about to launch:
+
+```sh
+./ds4 --build-id            # e.g. ds4 backend=cuda arch=sm_100 cuda=13.2 git=84cc882
+./ds4-server --build-id
+```
+
+`scripts/ds4 verify` is the repeatable build+launch smoke: it re-execs into the
+rootfs, checks the toolchain and GPU visibility, builds `//:ds4` via Bazel,
+asserts the `--build-id` reports `backend=cuda arch=sm_100`, and runs a bounded
+greedy generation against `./ds4flash.gguf`. It exits `0` on success with a
+laddered failure code that names the stage: `21` preflight, `22` build, `23`
+launch, `24` generate, `25` generate-skipped when no model is on disk but
+build and launch were verified.
+
+```sh
+scripts/ds4 verify
+```
 
 ## Everyday Use
 

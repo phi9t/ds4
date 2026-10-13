@@ -1,0 +1,32 @@
+{
+  "root": "/tmp/ds4-selected-rootfs-cxxan_ax/runtime-only",
+  "records": [
+    {
+      "name": "ds4",
+      "seconds": 0.16394206904806197,
+      "returncode": 0
+    },
+    {
+      "name": "ds4-bench",
+      "seconds": 0.16397970891557634,
+      "returncode": 0
+    },
+    {
+      "name": "ds4-server",
+      "seconds": 0.16397470887750387,
+      "returncode": 0
+    },
+    {
+      "name": "ds4-eval",
+      "seconds": 0.16388097614981234,
+      "returncode": 0
+    },
+    {
+      "name": "ds4-agent",
+      "seconds": 0.16388970706611872,
+      "returncode": 0
+    }
+  ],
+  "compiler_absent": true,
+  "source_absent": true
+}

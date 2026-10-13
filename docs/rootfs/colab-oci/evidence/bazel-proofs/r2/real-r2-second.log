@@ -1,0 +1,19 @@
+Extracting Bazel installation...
+OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Computing main repo mapping: 
+Loading: 
+Loading: 0 packages loaded
+Analyzing: 3 targets (5 packages loaded, 6 targets configured)
+Analyzing: 3 targets (5 packages loaded, 6 targets configured)
+
+INFO: Analyzed 3 targets (106 packages loaded, 598 targets configured).
+[28 / 41] OCI Descriptor inputs/os.tar.gz; 0s processwrapper-sandbox ... (10 actions running)
+[33 / 41] OCI Descriptor inputs/compiler.tar.gz; 1s processwrapper-sandbox ... (5 actions running)
+[40 / 41] OCI Image //:seed_image; 1s processwrapper-sandbox
+INFO: Found 3 targets...
+INFO: Elapsed time: 6.273s, Critical Path: 3.39s
+INFO: 41 processes: 7 internal, 34 processwrapper-sandbox.
+INFO: Build completed successfully, 41 total actions
+{"layout": "runtime_image", "manifest": "sha256:2e6ffa03bbe6b22e757554446b921ac32be24386954cb12879f4e524a7505d4c", "layers": ["os", "cuda-runtime", "app-ds4", "app-ds4-bench", "app-ds4-server", "app-ds4-eval", "app-ds4-agent", "metadata"], "compressed_bytes_verified": true}
+{"layout": "build_image", "manifest": "sha256:863159635b37e2280346657114583eb0835697b8c97cd84366bd2c5a2b8343bc", "layers": ["os", "cuda-runtime", "compiler", "bazel-tools", "source", "app-ds4", "app-ds4-bench", "app-ds4-server", "app-ds4-eval", "app-ds4-agent", "metadata"], "compressed_bytes_verified": true}
+{"layout": "seed_image", "manifest": "sha256:3cf696c2d4ff8578a0caafb54046dfb0f0a9cdee83d8f437ac6845460ec93dbf", "layers": ["os", "cuda-runtime", "compiler", "bazel-tools", "source", "app-ds4", "app-ds4-bench", "app-ds4-server", "app-ds4-eval", "app-ds4-agent", "metadata", "objects"], "compressed_bytes_verified": true}

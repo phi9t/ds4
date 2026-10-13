@@ -1,0 +1,534 @@
+{
+  "status": {
+    "phase": "complete",
+    "detail": {
+      "cpu_only": true,
+      "source_archive_sha256": "1c640b28efcc685778beb131b53f86ce06facf851e7956c93dced29fd7fd71f3"
+    },
+    "records": [
+      {
+        "name": "runtime-ds4",
+        "seconds": 2.5218324219999886,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "runtime-ds4-bench",
+        "seconds": 0.21499754300020868,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "runtime-ds4-server",
+        "seconds": 0.2148047589998896,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "runtime-ds4-eval",
+        "seconds": 0.2151998989997992,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "runtime-ds4-agent",
+        "seconds": 0.2154427659997964,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "compile-sm80",
+        "seconds": 1.7195556920000854,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "inspect-sm80",
+        "seconds": 0.515840802999719,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "readonly-root",
+        "seconds": 0.3653507880003417,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "copy-clean-source",
+        "seconds": 3.5794925730001523,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "clean-cuda-build",
+        "seconds": 644.120547769,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "clean-rebuilt-help",
+        "seconds": 2.220575157999974,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "validate-object-seed",
+        "seconds": 1.0721443910001653,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "refuse-mismatched-seed",
+        "seconds": 0.3151038440000775,
+        "returncode": 2,
+        "expected_returncode": 2
+      },
+      {
+        "name": "copy-seeded-source",
+        "seconds": 6.050210550999964,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "seeded-incremental-build",
+        "seconds": 2.1263274580001053,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "seeded-rebuilt-help",
+        "seconds": 0.21477618600010828,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "edit-one-source-rebuild",
+        "seconds": 1.3695700270000088,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "edit-strip-binary",
+        "seconds": 0.16526161100000536,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "offline-bazel-compose",
+        "seconds": 51.56941703800021,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "offline-baseline-manifests",
+        "seconds": 0.31539886300015496,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "offline-bazel-compose-edited",
+        "seconds": 20.353060538000136,
+        "returncode": 0,
+        "expected_returncode": 0
+      },
+      {
+        "name": "offline-edited-manifests",
+        "seconds": 0.26545279599986316,
+        "returncode": 0,
+        "expected_returncode": 0
+      }
+    ],
+    "restores": {
+      "build": {
+        "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:863159635b37e2280346657114583eb0835697b8c97cd84366bd2c5a2b8343bc",
+        "rootfs": "/content/layered-root-build-final",
+        "records": [
+          {
+            "name": "metadata",
+            "seconds": 0.9269051619999118
+          },
+          {
+            "name": "download-and-verify",
+            "seconds": 17.342502549000073,
+            "bytes": 938251303,
+            "cached_layers": 0
+          },
+          {
+            "name": "pack",
+            "seconds": 8.326751863000027
+          },
+          {
+            "name": "materialize-and-verify",
+            "seconds": 36.833074342000145
+          }
+        ],
+        "layer_digests": [
+          "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+          "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+          "sha256:9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+          "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+          "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+          "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+          "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+          "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+          "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+          "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+          "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f"
+        ]
+      },
+      "runtime": {
+        "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:2e6ffa03bbe6b22e757554446b921ac32be24386954cb12879f4e524a7505d4c",
+        "rootfs": "/content/layered-root-runtime-final",
+        "records": [
+          {
+            "name": "metadata",
+            "seconds": 0.9158655940000244
+          },
+          {
+            "name": "download-and-verify",
+            "seconds": 14.773551238999971,
+            "bytes": 653761527,
+            "cached_layers": 0
+          },
+          {
+            "name": "pack",
+            "seconds": 2.202998799999932
+          },
+          {
+            "name": "materialize-and-verify",
+            "seconds": 19.13225812399969
+          }
+        ],
+        "layer_digests": [
+          "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+          "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+          "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+          "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+          "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+          "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+          "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+          "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f"
+        ]
+      },
+      "seed": {
+        "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:3cf696c2d4ff8578a0caafb54046dfb0f0a9cdee83d8f437ac6845460ec93dbf",
+        "rootfs": "/content/layered-root-seed-final",
+        "records": [
+          {
+            "name": "metadata",
+            "seconds": 1.0264103810000051
+          },
+          {
+            "name": "download-and-verify",
+            "seconds": 4.480622169000071,
+            "bytes": 38880071,
+            "cached_layers": 11
+          },
+          {
+            "name": "pack",
+            "seconds": 4.679597373999968
+          },
+          {
+            "name": "materialize-and-verify",
+            "seconds": 44.56632610399993
+          }
+        ],
+        "layer_digests": [
+          "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+          "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+          "sha256:9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+          "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+          "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+          "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+          "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+          "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+          "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+          "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+          "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f",
+          "sha256:4db806b11970a55c741c2a058cf646de9078c0e6d06050b47fb57aa59b5b2119"
+        ]
+      }
+    }
+  },
+  "baseline": {
+    "runtime": {
+      "digest": "sha256:2e6ffa03bbe6b22e757554446b921ac32be24386954cb12879f4e524a7505d4c",
+      "manifest": {
+        "schemaVersion": 2,
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "config": {
+          "mediaType": "application/vnd.oci.image.config.v1+json",
+          "size": 1833,
+          "digest": "sha256:3685a3e621da7c5f7916a415d0f72c7d04f7f2771abd666e3a267bbd88f71ca4"
+        },
+        "layers": [
+          {
+            "size": 94673310,
+            "digest": "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 423101706,
+            "digest": "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27140350,
+            "digest": "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27107038,
+            "digest": "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27276030,
+            "digest": "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27178484,
+            "digest": "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27283026,
+            "digest": "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 1583,
+            "digest": "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          }
+        ]
+      }
+    },
+    "build": {
+      "digest": "sha256:863159635b37e2280346657114583eb0835697b8c97cd84366bd2c5a2b8343bc",
+      "manifest": {
+        "schemaVersion": 2,
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "config": {
+          "mediaType": "application/vnd.oci.image.config.v1+json",
+          "size": 2419,
+          "digest": "sha256:1daddc0e3781d0778de7cce99f9ea2ab32efa7411a858190d7e67143252ecae4"
+        },
+        "layers": [
+          {
+            "size": 94673310,
+            "digest": "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 423101706,
+            "digest": "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 162897588,
+            "digest": "sha256:9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 105505898,
+            "digest": "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 16086290,
+            "digest": "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27140350,
+            "digest": "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27107038,
+            "digest": "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27276030,
+            "digest": "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27178484,
+            "digest": "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27283026,
+            "digest": "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 1583,
+            "digest": "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          }
+        ]
+      }
+    }
+  },
+  "edited": {
+    "runtime": {
+      "digest": "sha256:73c42c7f0743328a218d5e23b3527f031fb5f808db8af5e2766159111b581a63",
+      "manifest": {
+        "schemaVersion": 2,
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "config": {
+          "mediaType": "application/vnd.oci.image.config.v1+json",
+          "size": 1833,
+          "digest": "sha256:0f560be77676186ef7934c605f2d574ca1bc3156b1afd84416a38af9cbc16d87"
+        },
+        "layers": [
+          {
+            "size": 94673310,
+            "digest": "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 423101706,
+            "digest": "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27140350,
+            "digest": "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27107070,
+            "digest": "sha256:5f00ddf1ec1e22d719d0f4af8ef66789b47f9cba6b1221f558374deb302faa39",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27276030,
+            "digest": "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27178484,
+            "digest": "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27283026,
+            "digest": "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 1633,
+            "digest": "sha256:6571452c6de13a3c1c8e4620a48b9eee920b21c6d85fe18bc04ecd4eccf364c5",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          }
+        ]
+      }
+    },
+    "build": {
+      "digest": "sha256:fb66bc0ff6f0059444cd022ffc44de8eafb12b9cc7b1ae29a2a4d597a42f8366",
+      "manifest": {
+        "schemaVersion": 2,
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "config": {
+          "mediaType": "application/vnd.oci.image.config.v1+json",
+          "size": 2419,
+          "digest": "sha256:9c6daa303884f1513bf0bb210ec8da2dab8c17b6b4e64f79ffaca886c9b8aaf7"
+        },
+        "layers": [
+          {
+            "size": 94673310,
+            "digest": "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 423101706,
+            "digest": "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 162897588,
+            "digest": "sha256:9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 105505898,
+            "digest": "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 16086325,
+            "digest": "sha256:cfa9b8fdf2a66d2da7cffe91802a28660e73065d367c5b97000dec6207446387",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27140350,
+            "digest": "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27107070,
+            "digest": "sha256:5f00ddf1ec1e22d719d0f4af8ef66789b47f9cba6b1221f558374deb302faa39",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27276030,
+            "digest": "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27178484,
+            "digest": "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 27283026,
+            "digest": "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          {
+            "size": 1633,
+            "digest": "sha256:6571452c6de13a3c1c8e4620a48b9eee920b21c6d85fe18bc04ecd4eccf364c5",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          }
+        ]
+      }
+    }
+  },
+  "changed_input_blobs": {
+    "changed": [
+      "source",
+      "app-ds4-bench",
+      "metadata"
+    ],
+    "unchanged": [
+      "os",
+      "cuda-runtime",
+      "compiler",
+      "bazel-tools",
+      "app-ds4",
+      "app-ds4-server",
+      "app-ds4-eval",
+      "app-ds4-agent"
+    ],
+    "new_sha256": {
+      "os": "d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+      "cuda-runtime": "c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+      "compiler": "9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+      "bazel-tools": "529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+      "source": "cfa9b8fdf2a66d2da7cffe91802a28660e73065d367c5b97000dec6207446387",
+      "app-ds4": "02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+      "app-ds4-bench": "5f00ddf1ec1e22d719d0f4af8ef66789b47f9cba6b1221f558374deb302faa39",
+      "app-ds4-server": "fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+      "app-ds4-eval": "d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+      "app-ds4-agent": "421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+      "metadata": "6571452c6de13a3c1c8e4620a48b9eee920b21c6d85fe18bc04ecd4eccf364c5"
+    }
+  }
+}

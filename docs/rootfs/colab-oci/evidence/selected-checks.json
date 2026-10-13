@@ -1,0 +1,51 @@
+{
+  "state": "/tmp/ds4-selected-rootfs-cxxan_ax",
+  "root": "/tmp/ds4-selected-rootfs-cxxan_ax/curated",
+  "records": [
+    {
+      "name": "ds4-help",
+      "seconds": 0.16386216203682125,
+      "returncode": 0
+    },
+    {
+      "name": "ds4-bench-help",
+      "seconds": 0.16391890891827643,
+      "returncode": 0
+    },
+    {
+      "name": "ds4-server-help",
+      "seconds": 0.16378817078657448,
+      "returncode": 0
+    },
+    {
+      "name": "ds4-eval-help",
+      "seconds": 0.16382981091737747,
+      "returncode": 0
+    },
+    {
+      "name": "ds4-agent-help",
+      "seconds": 0.16384648717939854,
+      "returncode": 0
+    },
+    {
+      "name": "nvcc",
+      "seconds": 0.11374709405936301,
+      "returncode": 0
+    },
+    {
+      "name": "copy-source",
+      "seconds": 0.4141530320048332,
+      "returncode": 0
+    },
+    {
+      "name": "clean-cuda-build",
+      "seconds": 168.56859650695696,
+      "returncode": 0
+    },
+    {
+      "name": "rebuilt-help",
+      "seconds": 0.1638861980754882,
+      "returncode": 0
+    }
+  ]
+}

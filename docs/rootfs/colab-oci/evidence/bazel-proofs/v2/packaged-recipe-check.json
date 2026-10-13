@@ -1,0 +1,13 @@
+{
+  "matches_live_recipe": true,
+  "sha256": {
+    "MODULE.bazel": "1f680d689d9f79f451242842fbe87be17711f6539876bb0ef0ad720d218a486f",
+    "MODULE.bazel.lock": "3c9863517e7699fb3b077595c44904426de604898dfec1b5afb09c627393c2d4",
+    "BUILD.bazel": "3192fc05616a7324ca88f6c1dde69e8807ec2cc16bf5338d7a5df86541336bc7",
+    "compose-offline.sh": "afe835cab8bf85581095169837251f75c9361a8843c842e7106abede6c2a8ac4",
+    "link-layers.sh": "7244461f55ca4aae7d4afedf202fb2619bf7184a6db9504f1bf859621cb60d53",
+    "verify-layout.py": "011075f2f282de8c72bb179b9927d87a223ea41724c61aad316d8244667183be",
+    "README.md": "753d0f6c8f0b1d4fdcecec966c15c37d5f68ba2596a2eae8d3ab50bab63c8d74",
+    "acquisition.json": "9e5e8f00f22183481fef59c36f1d7d8b0ef30f57db650bc2d4c4c7aa69c755db"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "default_without_objects": "passed",
+  "explicit_seed_without_objects": "rejected",
+  "seed_stderr": "seed requires ../layers/objects.tar.gz"
+}

@@ -1,0 +1,258 @@
+{
+  "phase": "complete",
+  "detail": {
+    "cpu_only": true,
+    "source_archive_sha256": "1c640b28efcc685778beb131b53f86ce06facf851e7956c93dced29fd7fd71f3"
+  },
+  "records": [
+    {
+      "name": "runtime-ds4",
+      "seconds": 2.421051868000177,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "runtime-ds4-bench",
+      "seconds": 0.2146146409997982,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "runtime-ds4-server",
+      "seconds": 0.21566844300014054,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "runtime-ds4-eval",
+      "seconds": 0.21495147299992823,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "runtime-ds4-agent",
+      "seconds": 0.21484777299997404,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "compile-sm80",
+      "seconds": 1.8205699039999672,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "inspect-sm80",
+      "seconds": 0.5668554950000271,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "readonly-root",
+      "seconds": 0.5187973659999443,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "copy-clean-source",
+      "seconds": 3.8773961199999576,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "clean-cuda-build",
+      "seconds": 631.0314119930001,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "clean-rebuilt-help",
+      "seconds": 2.2705871739999566,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "validate-object-seed",
+      "seconds": 0.9181148229999962,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "refuse-mismatched-seed",
+      "seconds": 0.3171099020000838,
+      "returncode": 2,
+      "expected_returncode": 2
+    },
+    {
+      "name": "copy-seeded-source",
+      "seconds": 6.095302379999794,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "seeded-incremental-build",
+      "seconds": 2.1322620519999873,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "seeded-rebuilt-help",
+      "seconds": 0.26601967499982493,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "edit-one-source-rebuild",
+      "seconds": 1.4717295109999213,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "edit-strip-binary",
+      "seconds": 0.16680790800000977,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "edited-stripped-help",
+      "seconds": 0.21489996700029224,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "offline-bazel-compose",
+      "seconds": 49.62462750400027,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "offline-baseline-manifests",
+      "seconds": 0.41732386500007124,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "offline-bazel-compose-edited",
+      "seconds": 20.13981671900001,
+      "returncode": 0,
+      "expected_returncode": 0
+    },
+    {
+      "name": "offline-edited-manifests",
+      "seconds": 0.3679637770001136,
+      "returncode": 0,
+      "expected_returncode": 0
+    }
+  ],
+  "restores": {
+    "build": {
+      "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:863159635b37e2280346657114583eb0835697b8c97cd84366bd2c5a2b8343bc",
+      "rootfs": "/content/layered-root-build-r3",
+      "records": [
+        {
+          "name": "metadata",
+          "seconds": 0.49103740699979426
+        },
+        {
+          "name": "download-and-verify",
+          "seconds": 12.434378334999792,
+          "bytes": 938251303,
+          "cached_layers": 0
+        },
+        {
+          "name": "pack",
+          "seconds": 5.595375860000104
+        },
+        {
+          "name": "materialize-and-verify",
+          "seconds": 55.77936867199992
+        }
+      ],
+      "layer_digests": [
+        "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+        "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+        "sha256:9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+        "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+        "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+        "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+        "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+        "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+        "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+        "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+        "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f"
+      ]
+    },
+    "runtime": {
+      "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:2e6ffa03bbe6b22e757554446b921ac32be24386954cb12879f4e524a7505d4c",
+      "rootfs": "/content/layered-root-runtime-r3",
+      "records": [
+        {
+          "name": "metadata",
+          "seconds": 0.47044855500007543
+        },
+        {
+          "name": "download-and-verify",
+          "seconds": 10.981242781999981,
+          "bytes": 653761527,
+          "cached_layers": 0
+        },
+        {
+          "name": "pack",
+          "seconds": 4.030613594999977
+        },
+        {
+          "name": "materialize-and-verify",
+          "seconds": 21.08243650899999
+        }
+      ],
+      "layer_digests": [
+        "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+        "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+        "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+        "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+        "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+        "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+        "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+        "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f"
+      ]
+    },
+    "seed": {
+      "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:3cf696c2d4ff8578a0caafb54046dfb0f0a9cdee83d8f437ac6845460ec93dbf",
+      "rootfs": "/content/layered-root-seed-r3",
+      "records": [
+        {
+          "name": "metadata",
+          "seconds": 0.41286478900019574
+        },
+        {
+          "name": "download-and-verify",
+          "seconds": 5.138655387999961,
+          "bytes": 38880071,
+          "cached_layers": 11
+        },
+        {
+          "name": "pack",
+          "seconds": 5.302984852999998
+        },
+        {
+          "name": "materialize-and-verify",
+          "seconds": 40.4111661689999
+        }
+      ],
+      "layer_digests": [
+        "sha256:d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+        "sha256:c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+        "sha256:9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+        "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+        "sha256:a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+        "sha256:02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+        "sha256:3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+        "sha256:fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+        "sha256:d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+        "sha256:421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+        "sha256:84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f",
+        "sha256:4db806b11970a55c741c2a058cf646de9078c0e6d06050b47fb57aa59b5b2119"
+      ]
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "source_image": "sha256:03a4d77a509f59a204747661ef7207232c846cb1146077073ef87116009d7462",
+  "state": "/tmp/ds4-selected-rootfs-cxxan_ax",
+  "phases": [
+    {
+      "name": "export-source-rootfs",
+      "seconds": 15.686035146005452
+    }
+  ],
+  "original_application_sha256": {
+    "ds4": "1a166cf7edcf7c38944273fc6fe4051b4c4a1c53908a0a9fb55fffe97a2dff7e",
+    "ds4-bench": "7919079471a0df3494d2b531cbfa7a466d75463e2dfd716e56ba2c77028413d3",
+    "ds4-server": "2862a432c7e94fd21370630519b0ee6cd5799001987005a8ee095380517796ff",
+    "ds4-eval": "88b82aba55482512788565f1734aeb031945eb435b5ad7d51ba8426369f9eb20",
+    "ds4-agent": "2c69ff8fbbe82fab89a481419290e7f9a13ac2ed79520125808af51849c9f721"
+  },
+  "source_members": 3585,
+  "logical_unique_file_bytes": {
+    "os": 271860164,
+    "cuda-runtime": 596662800,
+    "compiler": 447370480,
+    "source": 189843562,
+    "app": 170574592,
+    "metadata": 0,
+    "objects": 93039632
+  },
+  "layers": {
+    "os": {
+      "file": "os.tar.gz",
+      "sha256": "d8f766ec83428672910752cb697227f32343040111a5b27c7284b98ed4aa9e29",
+      "compressed_bytes": 94673310,
+      "seconds": 12.164305726997554
+    },
+    "cuda-runtime": {
+      "file": "cuda-runtime.tar.gz",
+      "sha256": "c867b8d8c630eb0cfdfc644020acfb054ff5411d2bd0f3b3075765c772c2e890",
+      "compressed_bytes": 423101706,
+      "seconds": 18.895041507901624
+    },
+    "compiler": {
+      "file": "compiler.tar.gz",
+      "sha256": "9d6fef0136687ab9e4291268fd2d347391aa99d8dc2efdf8e6a7d72cb8a99596",
+      "compressed_bytes": 162897588,
+      "seconds": 19.88913078699261
+    },
+    "source": {
+      "file": "source.tar.gz",
+      "sha256": "a167b8d29909fead41f5e1f61c0c0caa233f69f66d064b8008901ce4853edb1e",
+      "compressed_bytes": 16086290,
+      "seconds": 2.648545938078314
+    },
+    "metadata": {
+      "file": "metadata.tar.gz",
+      "sha256": "84c858f7c8d9d06a423149ec76a77697b20e63afdfb11f06eaf6202e23d42c0f",
+      "compressed_bytes": 1583,
+      "seconds": 0.0008163400925695896
+    },
+    "objects": {
+      "file": "objects.tar.gz",
+      "sha256": "4db806b11970a55c741c2a058cf646de9078c0e6d06050b47fb57aa59b5b2119",
+      "compressed_bytes": 38880071,
+      "seconds": 2.6412291349843144
+    },
+    "app-ds4": {
+      "file": "app-ds4.tar.gz",
+      "sha256": "02cb0f538eecafc3199708ee3409e226475379b20dfb9e05c28a07773e205d2f",
+      "compressed_bytes": 27140350,
+      "seconds": 1.004105247091502
+    },
+    "app-ds4-bench": {
+      "file": "app-ds4-bench.tar.gz",
+      "sha256": "3b48fa124a406eef9ec01494e787bb1ef4dc7a7905509711f8c067fd2adcc134",
+      "compressed_bytes": 27107038,
+      "seconds": 0.9951468561775982
+    },
+    "app-ds4-server": {
+      "file": "app-ds4-server.tar.gz",
+      "sha256": "fc186cebbca603c03598bf35c84a3f9988c2202fa544c8194e3accb37dc97368",
+      "compressed_bytes": 27276030,
+      "seconds": 1.0206419590394944
+    },
+    "app-ds4-eval": {
+      "file": "app-ds4-eval.tar.gz",
+      "sha256": "d791a68f17aaf5352393f44ced88601039db1bc346e784f1afc3d0986d39074b",
+      "compressed_bytes": 27178484,
+      "seconds": 1.0064360469114035
+    },
+    "app-ds4-agent": {
+      "file": "app-ds4-agent.tar.gz",
+      "sha256": "421538f26c4096b5658e9cc5bf00d1aea711dddb4798f6f0a7a3aa47f8a87481",
+      "compressed_bytes": 27283026,
+      "seconds": 1.0214756049681455
+    }
+  },
+  "superseded_aggregate_app": {
+    "file": "app.tar.gz",
+    "sha256": "c603d2ef42fba2689294a499466e306594f9d4a52b71249c3c52fdbe4272ac6d",
+    "compressed_bytes": 135981029,
+    "seconds": 5.032667381921783
+  }
+}

@@ -1,0 +1,2 @@
+# Captured tool output retains exact bytes, including whitespace.
+*.log -text -whitespace

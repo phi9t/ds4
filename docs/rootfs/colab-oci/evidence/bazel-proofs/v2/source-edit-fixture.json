@@ -1,0 +1,237 @@
+{
+  "scope": "Synthetic source/application fixture substitution; no source compilation or CUDA validation claimed. Real live clean compilation is independently recorded by the main agent.",
+  "network": "none",
+  "rootfs": "read-only",
+  "vendor_template": "read-only",
+  "fresh_output_roots": true,
+  "substituted_inputs": [
+    "source",
+    "app-ds4-bench"
+  ],
+  "changed_layers": {
+    "runtime": [
+      "app-ds4-bench"
+    ],
+    "build": [
+      "source",
+      "app-ds4-bench"
+    ]
+  },
+  "unchanged_layers_verified": true,
+  "records": {
+    "baseline": {
+      "runtime": {
+        "manifest": "sha256:fd099e247722b7a640fd4d0070bae507ccf15d63f8ac20728d6d63ef17f645db",
+        "layers": {
+          "os": {
+            "size": 112,
+            "digest": "sha256:d4dd7b911978296d793a26f83ba170a4bf6358cec5b13e11783a1bcfcc3679b7",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "cuda-runtime": {
+            "size": 125,
+            "digest": "sha256:cee58571ee1b94ee9dab604c49602f6b83ab6e96fc5e30b240329afde8122f3a",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4": {
+            "size": 118,
+            "digest": "sha256:a6af406b72f076860688b1e9060ca9b533ee40dff86f8996c3f26fe0005989be",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-bench": {
+            "size": 125,
+            "digest": "sha256:bf07a777dfe4ed5be8224a200ad879e9b828b9ff812f1935fe6ad9be4b7a39d7",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-server": {
+            "size": 125,
+            "digest": "sha256:febec3ec6cba70effb2feca9c06ec1ffa48a3cc51af99d3e76d00f5e56e71687",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-eval": {
+            "size": 125,
+            "digest": "sha256:fbc297a4e634a2f506aa4c8bd5740408e671b0bdc947e8968b9a34c590f62154",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-agent": {
+            "size": 125,
+            "digest": "sha256:67cbae2a2129c4510a26b8a301d6f06d7b7be06abd8604439e4c4316cd1e1fe4",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "metadata": {
+            "size": 119,
+            "digest": "sha256:72d21187ceaf4deb208869568bb40d3d849eaaca746980dc10c457fa1de8d41c",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          }
+        }
+      },
+      "build": {
+        "manifest": "sha256:e65bd0e0618d65a2fe71c591de2e3ea99db53a8e9cf18edc047c86517e6bd3fc",
+        "layers": {
+          "os": {
+            "size": 112,
+            "digest": "sha256:d4dd7b911978296d793a26f83ba170a4bf6358cec5b13e11783a1bcfcc3679b7",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "cuda-runtime": {
+            "size": 125,
+            "digest": "sha256:cee58571ee1b94ee9dab604c49602f6b83ab6e96fc5e30b240329afde8122f3a",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "compiler": {
+            "size": 121,
+            "digest": "sha256:7174a1035e3faf2bf94427bae6763203144fed5781898e1d5aa5226404971145",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "bazel-tools": {
+            "size": 105505898,
+            "digest": "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "source": {
+            "size": 117,
+            "digest": "sha256:effbd079b2d68d38b75853bcce8f54692a9d9a67221a863fb63ee9f0309f615a",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4": {
+            "size": 118,
+            "digest": "sha256:a6af406b72f076860688b1e9060ca9b533ee40dff86f8996c3f26fe0005989be",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-bench": {
+            "size": 125,
+            "digest": "sha256:bf07a777dfe4ed5be8224a200ad879e9b828b9ff812f1935fe6ad9be4b7a39d7",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-server": {
+            "size": 125,
+            "digest": "sha256:febec3ec6cba70effb2feca9c06ec1ffa48a3cc51af99d3e76d00f5e56e71687",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-eval": {
+            "size": 125,
+            "digest": "sha256:fbc297a4e634a2f506aa4c8bd5740408e671b0bdc947e8968b9a34c590f62154",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-agent": {
+            "size": 125,
+            "digest": "sha256:67cbae2a2129c4510a26b8a301d6f06d7b7be06abd8604439e4c4316cd1e1fe4",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "metadata": {
+            "size": 119,
+            "digest": "sha256:72d21187ceaf4deb208869568bb40d3d849eaaca746980dc10c457fa1de8d41c",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          }
+        }
+      }
+    },
+    "edited": {
+      "runtime": {
+        "manifest": "sha256:314ed280bd56fc81cb8697a078a6250c37ab3c08f40ac53407a75b62f89486f9",
+        "layers": {
+          "os": {
+            "size": 112,
+            "digest": "sha256:d4dd7b911978296d793a26f83ba170a4bf6358cec5b13e11783a1bcfcc3679b7",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "cuda-runtime": {
+            "size": 125,
+            "digest": "sha256:cee58571ee1b94ee9dab604c49602f6b83ab6e96fc5e30b240329afde8122f3a",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4": {
+            "size": 118,
+            "digest": "sha256:a6af406b72f076860688b1e9060ca9b533ee40dff86f8996c3f26fe0005989be",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-bench": {
+            "size": 137,
+            "digest": "sha256:d4cbd056de8da44d5d3681de905b89cd97a163c028dfced7ec49068dab7a90d9",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-server": {
+            "size": 125,
+            "digest": "sha256:febec3ec6cba70effb2feca9c06ec1ffa48a3cc51af99d3e76d00f5e56e71687",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-eval": {
+            "size": 125,
+            "digest": "sha256:fbc297a4e634a2f506aa4c8bd5740408e671b0bdc947e8968b9a34c590f62154",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-agent": {
+            "size": 125,
+            "digest": "sha256:67cbae2a2129c4510a26b8a301d6f06d7b7be06abd8604439e4c4316cd1e1fe4",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "metadata": {
+            "size": 119,
+            "digest": "sha256:72d21187ceaf4deb208869568bb40d3d849eaaca746980dc10c457fa1de8d41c",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          }
+        }
+      },
+      "build": {
+        "manifest": "sha256:cc0ae1624b5c7cec04e40534d2dca96e508d39b9d05d1270d642020e6952e1ef",
+        "layers": {
+          "os": {
+            "size": 112,
+            "digest": "sha256:d4dd7b911978296d793a26f83ba170a4bf6358cec5b13e11783a1bcfcc3679b7",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "cuda-runtime": {
+            "size": 125,
+            "digest": "sha256:cee58571ee1b94ee9dab604c49602f6b83ab6e96fc5e30b240329afde8122f3a",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "compiler": {
+            "size": 121,
+            "digest": "sha256:7174a1035e3faf2bf94427bae6763203144fed5781898e1d5aa5226404971145",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "bazel-tools": {
+            "size": 105505898,
+            "digest": "sha256:529ec429a6d55325545b91368bd23446e0016d039f699717f4c262be8a6b84cd",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "source": {
+            "size": 130,
+            "digest": "sha256:f1f9bb57ca6e406c7cafdc53e09c9598aa7dd19f7974ad6540212f3a58e4c5a6",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4": {
+            "size": 118,
+            "digest": "sha256:a6af406b72f076860688b1e9060ca9b533ee40dff86f8996c3f26fe0005989be",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-bench": {
+            "size": 137,
+            "digest": "sha256:d4cbd056de8da44d5d3681de905b89cd97a163c028dfced7ec49068dab7a90d9",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-server": {
+            "size": 125,
+            "digest": "sha256:febec3ec6cba70effb2feca9c06ec1ffa48a3cc51af99d3e76d00f5e56e71687",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-eval": {
+            "size": 125,
+            "digest": "sha256:fbc297a4e634a2f506aa4c8bd5740408e671b0bdc947e8968b9a34c590f62154",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "app-ds4-agent": {
+            "size": 125,
+            "digest": "sha256:67cbae2a2129c4510a26b8a301d6f06d7b7be06abd8604439e4c4316cd1e1fe4",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          },
+          "metadata": {
+            "size": 119,
+            "digest": "sha256:72d21187ceaf4deb208869568bb40d3d849eaaca746980dc10c457fa1de8d41c",
+            "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip"
+          }
+        }
+      }
+    }
+  }
+}

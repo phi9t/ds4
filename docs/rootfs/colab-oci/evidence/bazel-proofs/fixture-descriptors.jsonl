@@ -1,0 +1,3 @@
+{"layout": "runtime_image", "manifest": "sha256:3c5d13610467c2930abf73646640966aa7c26f694e0816e9ffbe4f00815a3740", "layers": ["os", "cuda-runtime", "app", "metadata"], "compressed_bytes_verified": true}
+{"layout": "build_image", "manifest": "sha256:ef3f629adf22ad4b144b3410256fd1598f450b30e397db3ef49e9c3753fde95a", "layers": ["os", "cuda-runtime", "compiler", "source", "app", "metadata"], "compressed_bytes_verified": true}
+{"layout": "seed_image", "manifest": "sha256:2b5f8423e3a36e6303a5d1cde5f6e66626e708c7b6781a07243a2cfa1c2bf3fb", "layers": ["os", "cuda-runtime", "compiler", "source", "app", "metadata", "objects"], "compressed_bytes_verified": true}

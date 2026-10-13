@@ -1,0 +1,23 @@
+{
+  "bazel": {
+    "version": "9.2.0",
+    "platform": "linux-x86_64",
+    "binary_url": "https://github.com/bazelbuild/bazel/releases/download/9.2.0/bazel-9.2.0-linux-x86_64",
+    "checksum_url": "https://github.com/bazelbuild/bazel/releases/download/9.2.0/bazel-9.2.0-linux-x86_64.sha256",
+    "sha256": "7668a95db1250f12c40407251e4e203b4ec8bf39bc495d2f485b2d8c99048694"
+  },
+  "rules_oci": {
+    "version": "2.3.3",
+    "latest_release_api": "https://api.github.com/repos/bazel-contrib/rules_oci/releases/latest",
+    "release_archive_url": "https://github.com/bazel-contrib/rules_oci/releases/download/v2.3.3/rules_oci-v2.3.3.tar.gz",
+    "sha256": "243eac87ec41d68d1d9e6d21884a50ec28e031f702b0b9fcdc7f97c3f3d5389a",
+    "registry_note": "Official latest release 2.3.3 absent from BCR at acquisition; integrity-pinned archive_override."
+  },
+  "offline": {
+    "vendor_path": "/opt/ds4/bazel/vendor",
+    "binary_path": "/opt/ds4/bin/bazel",
+    "project_template": "/opt/ds4/bazel/project",
+    "scope": "linux amd64 image composition; Makefile remains the benchmark build system",
+    "excluded": "vendor/bazel-external and Bazel output/action/download caches"
+  }
+}

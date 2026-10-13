@@ -1,0 +1,19 @@
+Extracting Bazel installation...
+OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Computing main repo mapping: 
+Loading: 
+Loading: 0 packages loaded
+Analyzing: 3 targets (5 packages loaded, 6 targets configured)
+Analyzing: 3 targets (5 packages loaded, 6 targets configured)
+
+INFO: Analyzed 3 targets (106 packages loaded, 594 targets configured).
+[10 / 29] OCI Descriptor inputs/source.tar.gz; 0s processwrapper-sandbox ... (13 actions, 12 running)
+[18 / 29] OCI Descriptor inputs/os.tar.gz; 1s processwrapper-sandbox ... (8 actions running)
+[21 / 29] OCI Descriptor inputs/compiler.tar.gz; 2s processwrapper-sandbox ... (5 actions running)
+INFO: Found 3 targets...
+INFO: Elapsed time: 6.352s, Critical Path: 3.16s
+INFO: 29 processes: 7 internal, 22 processwrapper-sandbox.
+INFO: Build completed successfully, 29 total actions
+{"layout": "runtime_image", "manifest": "sha256:080a2f7d0197dcd7b6ca9e2a26b78023b667ccaafd97e4fce0df27ea979853d7", "layers": ["os", "cuda-runtime", "app", "metadata"], "compressed_bytes_verified": true}
+{"layout": "build_image", "manifest": "sha256:a4df32ee5d53d21a7e040c81171a305f0bca8b52de80cc6441033916b9a93b40", "layers": ["os", "cuda-runtime", "compiler", "source", "app", "metadata", "bazel-tools"], "compressed_bytes_verified": true}
+{"layout": "seed_image", "manifest": "sha256:2f14ac34646ca6c01583729d2b9679bff2821bf59c4bb38da02280e8978fbdc7", "layers": ["os", "cuda-runtime", "compiler", "source", "app", "metadata", "bazel-tools", "objects"], "compressed_bytes_verified": true}

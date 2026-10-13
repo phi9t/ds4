@@ -1,0 +1,43 @@
+{
+  "image": "ds4-a100-build:fc80bd6-cu130",
+  "unique_regular_logical_bytes": 8573331996,
+  "categories": {
+    "other-rootfs": 1561047511,
+    "ds4-source-other": 618589458,
+    "ds4-source-objects": 93039632,
+    "ds4-published-binaries": 428745896,
+    "nsight": 1303412104,
+    "cuda-runtime-cublas-cudart": 596592456,
+    "cuda-static-libraries": 2563805528,
+    "cuda-other-target-files": 1377285074,
+    "cuda-headers": 30814337
+  },
+  "debug_strip_measurements": [
+    {
+      "name": "ds4",
+      "original_bytes": 56414360,
+      "stripped_bytes": 33985560
+    },
+    {
+      "name": "ds4-bench",
+      "original_bytes": 56135256,
+      "stripped_bytes": 33914680
+    },
+    {
+      "name": "ds4-server",
+      "original_bytes": 57647288,
+      "stripped_bytes": 34248512
+    },
+    {
+      "name": "ds4-eval",
+      "original_bytes": 56486696,
+      "stripped_bytes": 34125680
+    },
+    {
+      "name": "ds4-agent",
+      "original_bytes": 57650200,
+      "stripped_bytes": 34300160
+    }
+  ],
+  "ldd_ds4_bench": "\tlinux-vdso.so.1 (0x00007fffdefe4000)\n\tlibcudart.so.13 => /usr/local/cuda/lib64/libcudart.so.13 (0x00007f5134000000)\n\tlibcublas.so.13 => /usr/local/cuda/lib64/libcublas.so.13 (0x00007f5130a00000)\n\tlibstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f5130782000)\n\tlibm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f5130699000)\n\tlibgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f5133fd2000)\n\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f5130487000)\n\t/lib64/ld-linux-x86-64.so.2 (0x00007f51364a4000)\n\tlibdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f51342b5000)\n\tlibpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f51342b0000)\n\tlibrt.so.1 => /lib/x86_64-linux-gnu/librt.so.1 (0x00007f5130482000)\n\tlibcublasLt.so.13 => /usr/local/cuda/lib64/libcublasLt.so.13 (0x00007f510a400000)\n"
+}

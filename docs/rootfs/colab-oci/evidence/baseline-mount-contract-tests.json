@@ -1,0 +1,27 @@
+[
+  {
+    "case": "rootfs-equal",
+    "returncode": 2,
+    "rejected_before_projection_creation": true
+  },
+  {
+    "case": "rootfs-child",
+    "returncode": 2,
+    "rejected_before_projection_creation": true
+  },
+  {
+    "case": "ancestor",
+    "returncode": 2,
+    "rejected_before_projection_creation": true
+  },
+  {
+    "case": "weights-equal",
+    "returncode": 2,
+    "rejected_before_projection_creation": true
+  },
+  {
+    "case": "weights-child",
+    "returncode": 2,
+    "rejected_before_projection_creation": true
+  }
+]

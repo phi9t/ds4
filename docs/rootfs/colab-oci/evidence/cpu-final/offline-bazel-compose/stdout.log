@@ -1,0 +1,42 @@
+Extracting Bazel installation...
+OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Computing main repo mapping: 
+Loading: 
+Loading: 0 packages loaded
+Analyzing: 2 targets (1 packages loaded)
+Analyzing: 2 targets (5 packages loaded, 6 targets configured)
+Analyzing: 2 targets (5 packages loaded, 6 targets configured)
+
+Analyzing: 2 targets (20 packages loaded, 12 targets configured)
+
+Analyzing: 2 targets (32 packages loaded, 12 targets configured)
+
+Analyzing: 2 targets (81 packages loaded, 43 targets configured)
+
+Analyzing: 2 targets (99 packages loaded, 367 targets configured)
+
+Analyzing: 2 targets (106 packages loaded, 595 targets configured)
+
+INFO: Analyzed 2 targets (106 packages loaded, 595 targets configured).
+[3 / 26] checking cached actions
+[3 / 26] [Prepa] Expanding template image_build_image.sh
+[6 / 26] OCI Descriptor inputs/os.tar.gz; 1s processwrapper-sandbox ... (2 actions running)
+[8 / 26] OCI Descriptor inputs/os.tar.gz; 2s processwrapper-sandbox ... (2 actions running)
+[10 / 26] OCI Descriptor inputs/os.tar.gz; 3s processwrapper-sandbox ... (2 actions running)
+[11 / 26] OCI Descriptor inputs/os.tar.gz; 4s processwrapper-sandbox ... (2 actions running)
+[12 / 26] OCI Descriptor inputs/cuda-runtime.tar.gz; 1s processwrapper-sandbox ... (2 actions running)
+[13 / 26] OCI Descriptor inputs/cuda-runtime.tar.gz; 9s processwrapper-sandbox ... (2 actions, 1 running)
+[14 / 26] OCI Descriptor inputs/os.tar.gz; 1s processwrapper-sandbox ... (2 actions, 1 running)
+[14 / 26] OCI Descriptor inputs/os.tar.gz; 2s processwrapper-sandbox ... (2 actions running)
+[15 / 26] OCI Descriptor inputs/compiler.tar.gz; 3s processwrapper-sandbox ... (2 actions, 1 running)
+[16 / 26] OCI Descriptor inputs/compiler.tar.gz; 4s processwrapper-sandbox ... (2 actions, 1 running)
+[18 / 26] OCI Descriptor inputs/compiler.tar.gz; 5s processwrapper-sandbox ... (2 actions running)
+[20 / 26] OCI Descriptor inputs/compiler.tar.gz; 6s processwrapper-sandbox ... (2 actions running)
+[21 / 26] OCI Descriptor inputs/compiler.tar.gz; 7s processwrapper-sandbox ... (2 actions running)
+[23 / 26] OCI Descriptor inputs/source.tar.gz; 0s processwrapper-sandbox ... (2 actions running)
+[24 / 26] OCI Descriptor inputs/bazel-tools.tar.gz; 3s processwrapper-sandbox
+[25 / 26] OCI Image //:build_image; 0s processwrapper-sandbox
+INFO: Found 2 targets...
+INFO: Elapsed time: 47.196s, Critical Path: 11.99s
+INFO: 26 processes: 5 internal, 21 processwrapper-sandbox.
+INFO: Build completed successfully, 26 total actions

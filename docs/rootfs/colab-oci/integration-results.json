@@ -1,0 +1,112 @@
+{
+  "tested_sources": {
+    "scripts/rootfs/a100_oci/publish.py": "a4f4200e1a9630f205cbbc185098094a9251753c6a2f37f18362aca1bb531352",
+    "scripts/rootfs/a100_oci/cpu_restore_test.py": "f00a5a0936a734f4d941b4ad4fd2a5c1703bb712928bee64e197e806d8f4a6c8",
+    "scripts/rootfs/a100_oci/launch_insula.py": "1921f552d58a5c68f0df6aa9364bfeea5a5b4ac1c0bb3872c4bfb9c9cbd612f4",
+    "scripts/rootfs/a100_oci/restore_and_test.py": "6ab2dbb828c0edff6b3b76914126fcb1fb95aeb255fc0db1f4a8b881e11992c3",
+    "scripts/rootfs/a100_oci/pack_verified_layers.py": "ebe3c96955edc5a3ba07b93deca196d095f6b119951de8ffcf256f63cac87d19",
+    "scripts/rootfs/a100_oci/acquire_crane.py": "47ecc8956d783899394b84d9f9a4c441dda77fd1632d5bb7085a39dbd8c5cbce",
+    "scripts/rootfs/a100_oci/layered/check_runtime.py": "df71ba314e2910988f4b3044aa69d206dec53a1d048fba3565aafeaa4c25870e",
+    "scripts/rootfs/a100_oci/layered/check_selected.py": "48e7bcbb4f2dec4e8e95c3f1c9347c681c737ad4fe20f83a85707fd9aceeefce",
+    "scripts/rootfs/a100_oci/layered/validate_object_seed.py": "64f20c89456f73ddedd943af860c148590d87215c85b100fe735a07e2b61cc75",
+    "scripts/rootfs/a100_oci/layered/restore_layers.py": "363164478d3a58c4406edf70f9b989e2f4a33e76e1ab4980b4ecbe4b97611f24",
+    "scripts/rootfs/a100_oci/layered/start_cpu_worker.py": "a4bd22dc25d08750e8248489ed105cb6d3bfd5975faaa649de10c681ed20c627",
+    "scripts/rootfs/a100_oci/layered/cpu_layered_test.py": "d717b73a4e24c1a7ef442b0f844707028065efa3d4fac98ce63ab6340bc3cb47",
+    "scripts/rootfs/a100_oci/layered/prepare_layers.py": "71e1591ace7e74271e8653bb18f3c24e500375218644e8db2d4031de4ce4a07a",
+    "scripts/rootfs/a100_oci/layered/publish_layers.py": "89e56a4bb1ed4ff499dd73aa5684796d006453ddf77bd72ed8501fb5a2a4bd5c",
+    "scripts/rootfs/a100_oci/layered/colab_safe.py": "0e5d3d704f6943d4228b345310bddf3be1b564b0618b8b7dca7ce11b4cd16584",
+    "scripts/rootfs/a100_oci/layered/package_tools.py": "634362caa0ff6af0b3d8d887f5e5defe96b7f0b1a7055694e7d99d29d25a3dc1",
+    "scripts/rootfs/a100_oci/layered/refine_layers.py": "c832e1051798c51ab4d7a5540a4f46ee0a733350138d57f54617d18c48f9b3af",
+    "scripts/rootfs/a100_oci/layered/bazel/link-layers.sh": "7244461f55ca4aae7d4afedf202fb2619bf7184a6db9504f1bf859621cb60d53",
+    "scripts/rootfs/a100_oci/layered/bazel/verify-layout.py": "011075f2f282de8c72bb179b9927d87a223ea41724c61aad316d8244667183be",
+    "scripts/rootfs/a100_oci/layered/bazel/compose-offline.sh": "afe835cab8bf85581095169837251f75c9361a8843c842e7106abede6c2a8ac4",
+    "scripts/rootfs/a100_oci/layered/bazel/BUILD.bazel": "3192fc05616a7324ca88f6c1dde69e8807ec2cc16bf5338d7a5df86541336bc7",
+    "scripts/rootfs/a100_oci/layered/bazel/MODULE.bazel": "1f680d689d9f79f451242842fbe87be17711f6539876bb0ef0ad720d218a486f",
+    "scripts/rootfs/a100_oci/tests/test_profile.py": "1f7eb6381d5cf6f2921e67e3971f66bacaec8403a6bf1cd590e82655811f851b",
+    "scripts/rootfs/a100_oci/tests/check_live_profile.py": "599c38ff9ffe87ffb16b8d6692c38e8cd5408ea0504fad116a536d55ac2cb403"
+  },
+  "status": "passed",
+  "scope": "fresh Linux builder integration; no Colab allocation, GPU projection, model inference or registry mutation",
+  "state": "/data02/home/philip.yang/workspace/colab-ds4-rootfs-20261011/ds4-oci-landing-check-5ohf8xid",
+  "records": [
+    {
+      "name": "portable-tests",
+      "seconds": 0.26404079678468406,
+      "returncode": 0
+    },
+    {
+      "name": "restored-build",
+      "seconds": 13.532512720208615,
+      "returncode": 0
+    },
+    {
+      "name": "help-ds4",
+      "seconds": 0.16390815214253962,
+      "returncode": 0
+    },
+    {
+      "name": "help-ds4-bench",
+      "seconds": 0.1638599461875856,
+      "returncode": 0
+    },
+    {
+      "name": "help-ds4-server",
+      "seconds": 0.16382199083454907,
+      "returncode": 0
+    },
+    {
+      "name": "help-ds4-eval",
+      "seconds": 0.16381897102110088,
+      "returncode": 0
+    },
+    {
+      "name": "help-ds4-agent",
+      "seconds": 0.16381867206655443,
+      "returncode": 0
+    },
+    {
+      "name": "compile-sm80",
+      "seconds": 0.3640775070525706,
+      "returncode": 0
+    },
+    {
+      "name": "inspect-sm80",
+      "seconds": 0.3648759489879012,
+      "returncode": 0
+    },
+    {
+      "name": "offline-compose",
+      "seconds": 7.126308515900746,
+      "returncode": 0
+    },
+    {
+      "name": "inspect-manifests",
+      "seconds": 2.567227788036689,
+      "returncode": 0
+    },
+    {
+      "name": "package-tools",
+      "seconds": 14.133316508028656,
+      "returncode": 0
+    }
+  ],
+  "exact_published_manifests": {
+    "runtime": "sha256:2e6ffa03bbe6b22e757554446b921ac32be24386954cb12879f4e524a7505d4c",
+    "build": "sha256:863159635b37e2280346657114583eb0835697b8c97cd84366bd2c5a2b8343bc",
+    "seed": "sha256:3cf696c2d4ff8578a0caafb54046dfb0f0a9cdee83d8f437ac6845460ec93dbf"
+  },
+  "cached_build_layers": 11,
+  "source_commit": "fc80bd695da76ee14bcb86820bf900a5cdfda806",
+  "python": "3.11.2",
+  "crane_acquisition": {
+    "status": "passed",
+    "version": "0.22.1",
+    "sha256": "8e75c326adb43b053cfd78b9b987663f8f4fe4557f4d3915905643f25c730992",
+    "method": "fresh official release download with pinned binary verification"
+  },
+  "excluded_gates": [
+    "current CUDA13.2 engine build/generation, SSD and TP suites: engine sources and build graph unchanged",
+    "GPU inference of trimmed image: deliberately unqualified",
+    "publishing side effect: credentials parameterized but no upload performed during integration"
+  ]
+}

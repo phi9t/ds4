@@ -1,0 +1,38 @@
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["inputs/*.tar.gz"]))
+
+APPLICATION_LAYERS = ["inputs/app-ds4.tar.gz", "inputs/app-ds4-bench.tar.gz", "inputs/app-ds4-server.tar.gz", "inputs/app-ds4-eval.tar.gz", "inputs/app-ds4-agent.tar.gz"]
+RUNTIME_LAYERS = ["inputs/os.tar.gz", "inputs/cuda-runtime.tar.gz"] + APPLICATION_LAYERS + ["inputs/metadata.tar.gz"]
+BUILD_LAYERS = ["inputs/os.tar.gz", "inputs/cuda-runtime.tar.gz", "inputs/compiler.tar.gz", "inputs/bazel-tools.tar.gz", "inputs/source.tar.gz"] + APPLICATION_LAYERS + ["inputs/metadata.tar.gz"]
+
+oci_image(
+    name = "runtime_image",
+    tars = RUNTIME_LAYERS,
+    os = "linux",
+    architecture = "amd64",
+    entrypoint = ["/bin/bash"],
+    workdir = "/work",
+)
+oci_image(
+    name = "build_image",
+    tars = BUILD_LAYERS,
+    os = "linux",
+    architecture = "amd64",
+    entrypoint = ["/bin/bash"],
+    workdir = "/work",
+)
+oci_image(
+    name = "seed_image",
+    tars = BUILD_LAYERS + ["inputs/objects.tar.gz"],
+    os = "linux",
+    architecture = "amd64",
+    entrypoint = ["/bin/bash"],
+    workdir = "/work",
+)
+
+oci_load(name = "runtime_load", image = ":runtime_image", repo_tags = ["ds4-a100-runtime:fc80bd6-cu130"])
+oci_load(name = "build_load", image = ":build_image", repo_tags = ["ds4-a100-build:fc80bd6-cu130"])
+oci_load(name = "seed_load", image = ":seed_image", repo_tags = ["ds4-a100-seed:fc80bd6-cu130"])

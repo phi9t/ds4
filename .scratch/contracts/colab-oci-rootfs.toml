@@ -1,0 +1,28 @@
+schema_version = 1
+task_ref = "colab-oci-rootfs"
+mode = "delivery"
+
+[[context]]
+role = "design"
+path = ".scratch/colab-oci-rootfs/spec.md"
+
+[[context]]
+role = "task_plan"
+path = ".scratch/colab-oci-rootfs/issues/01-land.md"
+
+[[context]]
+role = "command_contract"
+path = "docs/agents/agentic-engineering.md"
+
+[outputs]
+required = ["self-contained experiment profile", "docs and pinned releases", "fresh verification receipt", "reviewed local commits"]
+
+[verification]
+commands = ["python3 scripts/rootfs/a100_oci/tests/test_profile.py", "git diff --check"]
+
+[authorization]
+gates = ["No Git push or mainline merge", "No GPU allocation or registry mutation"]
+
+[recovery]
+allow_automatic_resume = false
+checkpoint_policy = ["after-green", "after-commit", "after-review", "on-failure", "before-handoff"]

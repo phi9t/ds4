@@ -1,0 +1,3 @@
+usage: validate_object_seed.py [-h] [--rootfs ROOTFS] [--cuda-arch CUDA_ARCH]
+                               [--cpu-flag CPU_FLAG]
+validate_object_seed.py: error: Object seed incompatible: cuda_arch

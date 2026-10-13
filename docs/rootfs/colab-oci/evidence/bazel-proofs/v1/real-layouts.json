@@ -1,0 +1,5 @@
+{
+  "runtime": "/tmp/ds4-bazel-layer-bundle-20261011/real-outputs/second/17f74aaa4cd9e5d0c9fcd1cbc36d784c/execroot/_main/bazel-out/k8-fastbuild/bin/runtime_image",
+  "build": "/tmp/ds4-bazel-layer-bundle-20261011/real-outputs/second/17f74aaa4cd9e5d0c9fcd1cbc36d784c/execroot/_main/bazel-out/k8-fastbuild/bin/build_image",
+  "seed": "/tmp/ds4-bazel-layer-bundle-20261011/real-outputs/second/17f74aaa4cd9e5d0c9fcd1cbc36d784c/execroot/_main/bazel-out/k8-fastbuild/bin/seed_image"
+}

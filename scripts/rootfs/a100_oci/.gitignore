@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+/state/
+/tools/
+/ds4-fc80bd6-source.tar.gz
+/layered/layers/
+/layered/*-receipt.json
+/layered/path-ownership.json
+/layered/seed-manifest.json
+/layered/release.json
+/layered/publication-*.json
+/layered/bazel/inputs/
+/layered/bazel/bazel-*
+/layered/bazel/real-layouts.json

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source_commit": "fc80bd695da76ee14bcb86820bf900a5cdfda806",
+  "source_archive_sha256": "1c640b28efcc685778beb131b53f86ce06facf851e7956c93dced29fd7fd71f3",
+  "base_image": "nvidia/cuda:13.0.3-devel-ubuntu24.04@sha256:b7ae301dea2c162444795462ce17a05f6a516e5a75944b57af5b88540a1a2266",
+  "platform": "linux/amd64",
+  "cuda_arch": "sm_80",
+  "cpu_flag": "-march=x86-64",
+  "weights_included": false,
+  "build_argv": ["make", "-j16", "cuda", "CUDA_ARCH=sm_80", "NATIVE_CPU_FLAG=-march=x86-64"]
+}

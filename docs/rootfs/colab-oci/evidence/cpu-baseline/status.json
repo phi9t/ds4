@@ -1,0 +1,204 @@
+{
+  "phase": "complete",
+  "records": [
+    {
+      "name": "parallel-cold-layer-fetch",
+      "seconds": 159.4924727560001,
+      "returncode": 0,
+      "workers": 4,
+      "bytes": 4624656077,
+      "cached_layers": 0
+    },
+    {
+      "name": "acquire-image-metadata",
+      "seconds": 0.611880182999812,
+      "returncode": 0
+    },
+    {
+      "name": "pack-verified-compressed-layers",
+      "seconds": 32.278965438999876,
+      "returncode": 0
+    },
+    {
+      "name": "repeat-cached-pack",
+      "seconds": 42.046352694000234,
+      "returncode": 0
+    },
+    {
+      "name": "export-and-materialize",
+      "seconds": 221.05178576699973,
+      "returncode": 0
+    },
+    {
+      "name": "toolchain",
+      "seconds": 0.3199889190000249,
+      "returncode": 0
+    },
+    {
+      "name": "compile-cuda-sm80",
+      "seconds": 2.1307772119998845,
+      "returncode": 0
+    },
+    {
+      "name": "inspect-sm80-cubin",
+      "seconds": 0.5663198450001801,
+      "returncode": 0
+    },
+    {
+      "name": "read-only-rootfs",
+      "seconds": 0.26514495200035526,
+      "returncode": 0
+    },
+    {
+      "name": "prepare-rebuild",
+      "seconds": 9.806860113999846,
+      "returncode": 0
+    },
+    {
+      "name": "rebuild-ds4-bench",
+      "seconds": 2.3898246500002642,
+      "returncode": 0
+    },
+    {
+      "name": "rebuilt-cli-help",
+      "seconds": 2.677489787000013,
+      "returncode": 0
+    }
+  ],
+  "publication": {
+    "image": "ghcr.io/phi9t/ds4-a100-build-rootfs:fc80bd6-cu130-x86-64-20261011-r2",
+    "base": "nvidia/cuda@sha256:b7ae301dea2c162444795462ce17a05f6a516e5a75944b57af5b88540a1a2266",
+    "phases": [
+      {
+        "name": "docker-save",
+        "seconds": 35.50763010699302
+      },
+      {
+        "name": "crane-append-push",
+        "seconds": 25.016272542998195
+      }
+    ],
+    "digest": "sha256:f6634afd91ac32e8080ea24b5ae3fc77ed740261255413d16a44d6426c880c3c",
+    "reference": "ghcr.io/phi9t/ds4-a100-build-rootfs@sha256:f6634afd91ac32e8080ea24b5ae3fc77ed740261255413d16a44d6426c880c3c",
+    "layers": [
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 29733459,
+        "digest": "sha256:689b91d88a0f4086057ec826027b128902ecf2b516be510371c115bc55da19a6"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 6961924,
+        "digest": "sha256:95e35692d3cc347d712fd236fd2af3b1c697783518182b1ae716722f694ed616"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 362520,
+        "digest": "sha256:5e25946ba40dcbc2410bf1852d135a46cb31cc7f89c05b9ef1ab12a6ef988aeb"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 104893539,
+        "digest": "sha256:f0af354daeda18f18684b23520969ef6bb3de82bb267936f867b12769be9125d"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 32,
+        "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 186,
+        "digest": "sha256:ccf9c70a85fc6158d617c85f3f719f669efb00c28fd45fa292575d351435bd2f"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 6886,
+        "digest": "sha256:730c8029606bf4b4533d7a7159458cf5e3f348ea956ccfb10ce5da3e20adac8f"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 1508350026,
+        "digest": "sha256:a30da298bda6986d68697bc361b9204f189616a3b7cc748c91846ecddbb873aa"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 59988,
+        "digest": "sha256:21e0ed254c8bac8e7e21e80b250a5dc4a92211bbc2f658f9f81ef93c7c623f03"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 1685,
+        "digest": "sha256:cb3db0ad5ae089b6ae0c5b39b73e73cac40a558df052e602f8b0f24972b003b4"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 1524,
+        "digest": "sha256:8bd080c2e4b22c71c5058be60551a2735c1bead7341fe005313ca704578d9fa5"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 2323253941,
+        "digest": "sha256:b533a7368b7da8141f98b9a2442f84b5aa5d32f2d286c2611a32f725361f84b6"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 221,
+        "digest": "sha256:cc689184d8c0977f56d2da63b3a3d225dc9c7fadb9375338768cf4909b016b32"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 90095,
+        "digest": "sha256:400821fd86ee1a17c460a7addf3892121cfb660a274b37e6a23cf36e7eaa931c"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 17538481,
+        "digest": "sha256:ac188f323fb01dd065c01a5a521a8696194af2ac3007b87a88ec12c760da335c"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 16011245,
+        "digest": "sha256:23ca873550be09532889e45f32263ee3d66ee7720ac7f7528201e28fc60aa9d2"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 21877699,
+        "digest": "sha256:46f6ba08c1291586cbb5cb13f5a5d09ecdd2f3276afb453e16c3cd3a801d7998"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 39,
+        "digest": "sha256:89732bc7504122601f40269fc9ddfb70982e633ea9caf641ae45736f2846b004"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 595512052,
+        "digest": "sha256:833a8442d4669284ae97b30a11cd9414b593938a47969e8b4fdb1a725a87d83c"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 535,
+        "digest": "sha256:48b7f70a4ca0a21c34444a8ec9db7f95a79e4b6b875789f7d738284ee3f40ed9"
+      },
+      {
+        "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+        "size": 39,
+        "digest": "sha256:89732bc7504122601f40269fc9ddfb70982e633ea9caf641ae45736f2846b004"
+      }
+    ],
+    "compressed_layer_bytes": 4624656116,
+    "visibility": "private"
+  },
+  "environment": {
+    "cpu_only": true,
+    "memory": "MemTotal:       13286944 kB\nMemFree:          316128 kB\nMemAvailable:   12231396 kB\nBuffers:           67308 kB\nCached:         11768052 kB\nSwapCached:            0 kB\nActive:          7859040 kB\nInactive:        4553424 kB\nActive(anon):       1404 kB\nInactive(anon):   577900 kB\nActive(file):    7857636 kB\nInactive(file):  3975524 kB\nUnevictable:           8 kB\nMlocked:               8 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:               724 kB\nWriteback:             0 kB\nAnonPages:        577112 kB\nMapped:           230596 kB\nShmem:              2192 kB\nKReclaimable:     407752 kB\nSlab:             463024 kB\nSReclaimable:     407752 kB\nSUnreclaim:        55272 kB\nKernelStack:        5156 kB\nPageTables:         7436 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     6643472 kB\nCommitted_AS:    2780384 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       11604 kB\nVmallocChunk:          0 kB\nPercpu:             1096 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       64284 kB\nDirectMap2M:     5175296 kB\nDirectMap1G:    10485760 kB\n",
+    "platform": [
+      "Linux",
+      "97e4a582ed0e",
+      "6.6.122+",
+      "#1 SMP Thu Apr 30 18:17:14 UTC 2026",
+      "x86_64"
+    ]
+  }
+}
