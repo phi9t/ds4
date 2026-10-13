@@ -1,5 +1,9 @@
 # Agent Notes
 
+`AGENTS.md` is the canonical repository instruction file. Read it first for the
+current Clanker Constitution and agentic engineering workflow wiring. This file
+is kept for older tooling that still looks for `AGENT.md`.
+
 `ds4.c` is a DeepSeek V4 Flash specific inference engine. It is not a generic
 GGUF runner. The goal is a small, readable, high-performance C codebase. The
 engine is NVIDIA-CUDA-only; the CPU backend exists solely as a reference/debug
