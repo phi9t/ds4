@@ -78,12 +78,14 @@ else
     --build-arg BAZEL_VERSION="$BAZEL_VERSION" \
     --build-arg BAZELISK_VERSION="$BAZELISK_VERSION" \
     --build-arg MISE_VERSION="$MISE_VERSION" \
+	    --build-arg DS4_ROOTFS_APT_PACKAGES="$DS4_ROOTFS_APT_PACKAGES" \
     -f - "$ROOTFS_DIR" <<'DOCKERFILE'
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 ARG BAZEL_VERSION
 ARG BAZELISK_VERSION
 ARG MISE_VERSION
+ARG DS4_ROOTFS_APT_PACKAGES
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -91,8 +93,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # fetch bazel and, at runtime inside the rootfs, model shards.
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
-        bash build-essential gcc g++ make \
-        git curl ca-certificates python3 && \
+        ${DS4_ROOTFS_APT_PACKAGES} && \
     rm -rf /var/lib/apt/lists/*
 
 # /opt/ds4 is the read-only tool snapshot (bound ro at runtime). bazelisk pins
@@ -112,7 +113,7 @@ ENV USE_BAZEL_VERSION=${BAZEL_VERSION}
 # it so a broken base fails the build rather than the first Bazel build.
 RUN test -x /usr/local/cuda/bin/nvcc && /usr/local/cuda/bin/nvcc --version
 
-RUN mkdir -p /workspace/ds4 /ds4/cache /home/ds4 /opt/ds4/bin
+RUN mkdir -p /workspace/ds4 /ds4/cache /home/ds4 /opt/ds4/bin /work /weights /outputs
 
 ENV CUDA_HOME=/usr/local/cuda CUDA_PATH=/usr/local/cuda
 ENV PATH=/opt/ds4/bin:/usr/local/cuda/bin:/usr/local/bin:/usr/bin:/bin

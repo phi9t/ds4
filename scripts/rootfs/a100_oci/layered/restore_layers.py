@@ -90,8 +90,13 @@ def restore(publication,cache,root,crane,logs,notify=lambda phase,record:None):
         finally:
             if export.poll() is None:
                 os.killpg(export.pid,signal.SIGKILL);export.wait(timeout=10)
-    bundle=json.loads((stage/'opt/ds4/bundle-manifest.json').read_text())
-    if bundle['source_archive_sha256']!='1c640b28efcc685778beb131b53f86ce06facf851e7956c93dced29fd7fd71f3':raise ValueError('Unexpected source contract')
+    bundle_path=stage/'opt/ds4/bundle-manifest.json'
+    bundle=json.loads(bundle_path.read_text())
+    expected_bundle=publication.get('bundle_manifest_sha256')
+    if expected_bundle:
+        if file_hash(bundle_path)!=expected_bundle:raise ValueError('Unexpected bundle manifest')
+    elif bundle.get('source_archive_sha256')!='1c640b28efcc685778beb131b53f86ce06facf851e7956c93dced29fd7fd71f3':
+        raise ValueError('Unexpected source contract')
     for line in (stage/'opt/ds4/binaries.sha256').read_text().splitlines():
         digest,name=line.split(maxsplit=1)
         if file_hash(stage/name.lstrip('/'))!=digest:raise ValueError('Restored binary differs from bundle')

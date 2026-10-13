@@ -107,11 +107,11 @@ rootfs_contract_identity() {
   fields="$(
     # shellcheck disable=SC1090
     source "${contract}"
-    printf 'schema=%s arch=%s image=%s bazel=%s cuda=%s channel=%s driver_floor=%s bazelisk=%s mise=%s' \
+    printf 'schema=%s arch=%s image=%s bazel=%s cuda=%s channel=%s driver_floor=%s bazelisk=%s mise=%s apt=%s' \
       "${DS4_ROOTFS_SCHEMA:-}" "${DS4_ROOTFS_ARCH:-}" "${DS4_BASE_IMAGE:-}" \
       "${DS4_BAZEL_VERSION:-}" "${DS4_CUDA_VERSION:-}" \
       "${DS4_CUDA_CHANNEL:-}" "${DS4_DRIVER_FLOOR:-}" "${DS4_BAZELISK_VERSION:-}" \
-      "${DS4_MISE_VERSION:-}"
+      "${DS4_MISE_VERSION:-}" "${DS4_ROOTFS_APT_PACKAGES:-}"
   )"
   printf '%s' "${fields}" | sha256sum | cut -d' ' -f1
 }

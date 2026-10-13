@@ -13,18 +13,24 @@ def ds4_cuda_copts():
         "-lineinfo",
         "--use_fast_math",
         "-Xcompiler",
-        "-march=native",
+    ] + select({
+        "//:cuda_a100_binary": ["-march=x86-64"],
+        "//conditions:default": ["-march=native"],
+    }) + [
         "-Xcompiler",
         "-pthread",
     ]
 
 def ds4_c_copts():
-    # Match the Makefile CFLAGS exactly (correctness before speed): keep
-    # -ffast-math and -march=native so numeric behavior is identical.
+    # Match the Makefile CFLAGS on the local B200 path. The Colab A100 build
+    # keeps the CPU side portable because the restore gate runs on Colab CPUs.
     return [
         "-O3",
         "-ffast-math",
-        "-march=native",
+    ] + select({
+        "//:cuda_a100_binary": ["-march=x86-64"],
+        "//conditions:default": ["-march=native"],
+    }) + [
         "-g",
         "-std=c99",
         "-D_GNU_SOURCE",

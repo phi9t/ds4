@@ -1,0 +1,108 @@
+{
+  "phase": "complete",
+  "mode": "gpu",
+  "detail": {
+    "mode": "gpu",
+    "no_remote_rebuild": true,
+    "reference": "ghcr.io/phi9t/ds4-current-rootfs@sha256:3b828391b5c97ff04aa90a0677d738705b624f237492e0fdaa597a885a2ba863"
+  },
+  "records": [
+    {
+      "name": "help-ds4",
+      "seconds": 0.2142532249999931,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "help-ds4-bench",
+      "seconds": 0.2645669020000696,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "help-ds4-server",
+      "seconds": 0.21481640499996502,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "help-ds4-eval",
+      "seconds": 0.26440693400013515,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "help-ds4-agent",
+      "seconds": 0.2142132799999672,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "build-id-ds4",
+      "seconds": 0.26436491399999795,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "build-id-ds4-server",
+      "seconds": 0.21427783000012823,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "toolchain-nvcc-version",
+      "seconds": 0.16410949600003732,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "readonly-root",
+      "seconds": 0.16414751499996783,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    },
+    {
+      "name": "inside-nvidia-smi",
+      "seconds": 0.1640906630000245,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": true
+    }
+  ],
+  "restore": {
+    "reference": "ghcr.io/phi9t/ds4-current-rootfs@sha256:3b828391b5c97ff04aa90a0677d738705b624f237492e0fdaa597a885a2ba863",
+    "rootfs": "/content/current-root-a1002",
+    "records": [
+      {
+        "name": "metadata",
+        "seconds": 0.794733363999967
+      },
+      {
+        "name": "download-and-verify",
+        "seconds": 137.86987579699985,
+        "bytes": 3723639511,
+        "cached_layers": 0
+      },
+      {
+        "name": "pack",
+        "seconds": 6.926245394000034
+      },
+      {
+        "name": "materialize-and-verify",
+        "seconds": 78.90689017499994
+      }
+    ],
+    "layer_digests": [
+      "sha256:40b6662fbf68d3fb48596c84f13255361c5ec9b2e9ab29ee1e48ec379dda0f05"
+    ]
+  }
+}

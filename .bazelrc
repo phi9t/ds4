@@ -24,4 +24,9 @@ build:cuda --@rules_cuda//cuda:compiler=nvcc
 build:cuda --@rules_cuda//cuda:runtime=@cuda//:cuda_runtime
 build:cuda --@rules_cuda//cuda:archs=compute_100:sm_100
 
+# --config=cuda-a100: the Colab A100 (sm_80) build. Keep --config=cuda as the
+# local B200 default; this config only changes the generated GPU code target.
+build:cuda-a100 --config=cuda
+build:cuda-a100 --@rules_cuda//cuda:archs=compute_80:sm_80
+
 test --test_output=errors

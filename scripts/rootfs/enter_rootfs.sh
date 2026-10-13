@@ -154,6 +154,9 @@ EOF
     \"CUDA_HOME\": \"${ROOTFS_CUDA_HOME}\",
     \"CUDA_PATH\": \"${ROOTFS_CUDA_HOME}\",
     \"LD_LIBRARY_PATH\": ${ld_json},
+	    \"TMPDIR\": \"/tmp\",
+	    \"CC\": \"/usr/bin/gcc\",
+	    \"CXX\": \"/usr/bin/g++\",
     \"DS4_IN_ROOTFS\": \"1\",
     \"HOME\": \"${HOME_MNT}\",
     \"XDG_CACHE_HOME\": \"${ROOTFS_XDG_CACHE_HOME}\",
@@ -256,6 +259,9 @@ bwrap_args+=(
   --setenv CUDA_HOME "$ROOTFS_CUDA_HOME"
   --setenv CUDA_PATH "$ROOTFS_CUDA_HOME"
   --setenv LD_LIBRARY_PATH "$ROOTFS_LD"
+  --setenv TMPDIR /tmp
+  --setenv CC /usr/bin/gcc
+  --setenv CXX /usr/bin/g++
   --setenv DS4_IN_ROOTFS 1
   --setenv HOME "$HOME_MNT"
   --setenv XDG_CACHE_HOME "$ROOTFS_XDG_CACHE_HOME"

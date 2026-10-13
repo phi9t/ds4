@@ -108,9 +108,12 @@ print(f'remote auth ready: {{path}} mode={{oct(mode)}} bytes={{path.stat().st_si
 def start_worker(args):
     if not re.fullmatch(r'[a-z0-9-]+', args.run_name):
         raise ValueError('run name must contain only lowercase letters, digits, and hyphens')
-    if args.mode == 'full':
-        args.mode = 'release-validation'
-    code = f"""
+    if args.worker == 'legacy-cpu':
+        if args.mode == 'full':
+            args.mode = 'release-validation'
+        if args.mode not in ('run', 'release-validation'):
+            raise ValueError('legacy CPU worker mode must be run or release-validation')
+        code = f"""
 import os
 import subprocess
 import sys
@@ -118,6 +121,19 @@ import sys
 os.environ['DS4_ROOTFS_TEST_RUN'] = {args.run_name!r}
 os.environ['DS4_ROOTFS_TEST_MODE'] = {args.mode!r}
 subprocess.run([sys.executable, '/content/start_cpu_worker.py'], check=True)
+"""
+    else:
+        mode = 'cpu' if args.mode == 'run' else args.mode
+        if mode not in ('cpu', 'gpu'):
+            raise ValueError('current worker mode must be cpu or gpu')
+        code = f"""
+import os
+import subprocess
+import sys
+
+os.environ['DS4_CURRENT_COLAB_RUN'] = {args.run_name!r}
+os.environ['DS4_CURRENT_COLAB_MODE'] = {mode!r}
+subprocess.run([sys.executable, '/content/start_current_worker.py'], check=True)
 """
     run_checked([args.colab, 'exec', '-s', args.session, '--timeout', '60'],
                 input_text=code)
@@ -140,11 +156,13 @@ def main():
                         help='write the auth JSON locally and do not call colab')
     parser.add_argument('--force', action='store_true')
     parser.add_argument('--start-worker', action='store_true',
-                        help='start /content/start_cpu_worker.py after auth upload')
+                        help='start the selected /content worker after auth upload')
+    parser.add_argument('--worker', choices=('legacy-cpu', 'current'), default='legacy-cpu',
+                        help='worker to start when --start-worker is used')
     parser.add_argument('--run-name', default='r4',
                         help='DS4_ROOTFS_TEST_RUN value when --start-worker is used')
-    parser.add_argument('--mode', choices=('run', 'release-validation', 'full'), default='run',
-                        help='worker mode for --start-worker; run skips remote rebuilds')
+    parser.add_argument('--mode', choices=('run', 'release-validation', 'full', 'cpu', 'gpu'), default='run',
+                        help='worker mode for --start-worker; run/cpu skips remote rebuilds')
     args = parser.parse_args()
 
     if args.local_output is None and shutil.which(args.colab) is None:

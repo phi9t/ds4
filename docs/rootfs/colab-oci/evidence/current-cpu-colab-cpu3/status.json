@@ -1,0 +1,101 @@
+{
+  "phase": "complete",
+  "mode": "cpu",
+  "detail": {
+    "mode": "cpu",
+    "no_remote_rebuild": true,
+    "reference": "ghcr.io/phi9t/ds4-current-rootfs@sha256:3b828391b5c97ff04aa90a0677d738705b624f237492e0fdaa597a885a2ba863"
+  },
+  "records": [
+    {
+      "name": "help-ds4",
+      "seconds": 2.3775802700001805,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    },
+    {
+      "name": "help-ds4-bench",
+      "seconds": 0.21486714899992876,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    },
+    {
+      "name": "help-ds4-server",
+      "seconds": 0.21501061599974491,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    },
+    {
+      "name": "help-ds4-eval",
+      "seconds": 0.21501219399988258,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    },
+    {
+      "name": "help-ds4-agent",
+      "seconds": 0.2149358689998735,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    },
+    {
+      "name": "build-id-ds4",
+      "seconds": 0.2661785499999496,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    },
+    {
+      "name": "build-id-ds4-server",
+      "seconds": 0.21506426800033296,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    },
+    {
+      "name": "toolchain-nvcc-version",
+      "seconds": 0.11464186200009863,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    },
+    {
+      "name": "readonly-root",
+      "seconds": 0.2149899330001972,
+      "returncode": 0,
+      "expected_returncode": 0,
+      "gpu": false
+    }
+  ],
+  "restore": {
+    "reference": "ghcr.io/phi9t/ds4-current-rootfs@sha256:3b828391b5c97ff04aa90a0677d738705b624f237492e0fdaa597a885a2ba863",
+    "rootfs": "/content/current-root-cpu3",
+    "records": [
+      {
+        "name": "metadata",
+        "seconds": 1.0569077600002856
+      },
+      {
+        "name": "download-and-verify",
+        "seconds": 122.93164516299976,
+        "bytes": 3723639511,
+        "cached_layers": 0
+      },
+      {
+        "name": "pack",
+        "seconds": 108.33674145700024
+      },
+      {
+        "name": "materialize-and-verify",
+        "seconds": 183.9036863870001
+      }
+    ],
+    "layer_digests": [
+      "sha256:40b6662fbf68d3fb48596c84f13255361c5ec9b2e9ab29ee1e48ec379dda0f05"
+    ]
+  }
+}

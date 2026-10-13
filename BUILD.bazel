@@ -58,6 +58,16 @@ config_setting(
     flag_values = {"@rules_cuda//cuda:enable": "False"},
 )
 
+config_setting(
+    name = "cuda_arch_sm80",
+    flag_values = {"@rules_cuda//cuda:archs": "compute_80:sm_80"},
+)
+
+config_setting(
+    name = "cuda_arch_sm100",
+    flag_values = {"@rules_cuda//cuda:archs": "compute_100:sm_100"},
+)
+
 selects.config_setting_group(
     name = "cuda_enabled_gpu_backend",
     match_all = [
@@ -74,6 +84,22 @@ selects.config_setting_group(
     ],
 )
 
+selects.config_setting_group(
+    name = "cuda_a100_binary",
+    match_all = [
+        ":cuda_enabled_gpu_backend",
+        ":cuda_arch_sm80",
+    ],
+)
+
+selects.config_setting_group(
+    name = "cuda_b200_binary",
+    match_all = [
+        ":cuda_enabled_gpu_backend",
+        ":cuda_arch_sm100",
+    ],
+)
+
 # A binary is the real GPU engine only when both axes agree:
 # rules_cuda is enabled and the backend flag is cuda. Otherwise it is the CPU
 # oracle: compile GPU-guarded C TUs with -DDS4_NO_GPU, link no @cuda deps, and
@@ -87,7 +113,12 @@ _GPU_DEFINE = select({
 # Identity -D defines fed to the real ds4_build.c. The CPU value omits
 # DS4_BUILD_CUDA so ds4_build.c's empty-string default drops the cuda= field.
 _BUILD_IDENTITY_DEFINES = select({
-    ":cuda_enabled_gpu_backend": [
+    ":cuda_a100_binary": [
+        "DS4_BUILD_BACKEND=\\\"cuda\\\"",
+        "DS4_BUILD_ARCH=\\\"sm_80\\\"",
+        "DS4_BUILD_CUDA=\\\"13.2\\\"",
+    ],
+    ":cuda_b200_binary": [
         "DS4_BUILD_BACKEND=\\\"cuda\\\"",
         "DS4_BUILD_ARCH=\\\"sm_100\\\"",
         "DS4_BUILD_CUDA=\\\"13.2\\\"",
@@ -95,6 +126,11 @@ _BUILD_IDENTITY_DEFINES = select({
     ":cpu_binary": [
         "DS4_BUILD_BACKEND=\\\"cpu\\\"",
         "DS4_BUILD_ARCH=\\\"cpu\\\"",
+    ],
+    "//conditions:default": [
+        "DS4_BUILD_BACKEND=\\\"cuda\\\"",
+        "DS4_BUILD_ARCH=\\\"unknown\\\"",
+        "DS4_BUILD_CUDA=\\\"13.2\\\"",
     ],
 })
 

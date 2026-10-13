@@ -6,8 +6,9 @@
 # memorized ritual. Runs entirely inside the bwrap rootfs: if invoked from a
 # bare host shell it re-execs itself through enter_rootfs.sh.
 #
-# Usage: scripts/verify.sh [<arch-label> <expected-arch>]
+# Usage: scripts/verify.sh [<arch-label> [<expected-arch>]]
 #   defaults: cuda-b200 sm_100  (the wired `scripts/ds4 verify` instance)
+#   arch labels: cuda-b200 -> --config=cuda, cuda-a100 -> --config=cuda-a100
 #
 # Exit-code ladder (each failure names its own stage):
 #   0  pass (built, launches, generated a token)
@@ -20,9 +21,22 @@ set -euo pipefail
 
 REPO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 MAKE_TARGET="${1:-cuda-b200}"
-EXPECTED_ARCH="${2:-sm_100}"
 MODEL="${DS4_TEST_MODEL:-$REPO_ROOT/ds4flash.gguf}"
 FIXTURE_PROMPT="${DS4_VERIFY_PROMPT:-The capital of France is}"
+case "$MAKE_TARGET" in
+  cuda-b200)
+    BAZEL_CONFIG="${DS4_VERIFY_BAZEL_CONFIG:-cuda}"
+    EXPECTED_ARCH="${2:-sm_100}"
+    ;;
+  cuda-a100)
+    BAZEL_CONFIG="${DS4_VERIFY_BAZEL_CONFIG:-cuda-a100}"
+    EXPECTED_ARCH="${2:-sm_80}"
+    ;;
+  *)
+    BAZEL_CONFIG="${DS4_VERIFY_BAZEL_CONFIG:-$MAKE_TARGET}"
+    EXPECTED_ARCH="${2:?expected arch required for custom verify target $MAKE_TARGET}"
+    ;;
+esac
 
 log() { printf '\033[1m== verify: %s ==\033[0m\n' "$*" >&2; }
 fail() { printf '\033[1;31mverify: %s\033[0m\n' "$2" >&2; exit "$1"; }
@@ -50,8 +64,8 @@ fi
 log "preflight ok: nvcc present, ${gpu_count} GPU(s)"
 
 # --- Stage 2: build ---------------------------------------------------------
-log "build ($MAKE_TARGET)"
-bazel build --config=cuda //:ds4 || fail 22 "bazel build --config=cuda //:ds4 failed"
+log "build ($MAKE_TARGET -> --config=$BAZEL_CONFIG)"
+bazel build "--config=$BAZEL_CONFIG" //:ds4 || fail 22 "bazel build --config=$BAZEL_CONFIG //:ds4 failed"
 [[ -x bazel-bin/ds4 ]] || fail 22 "build did not produce bazel-bin/ds4"
 
 # --- Stage 3: launch (identity check) --------------------------------------

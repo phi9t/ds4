@@ -37,6 +37,11 @@ checks completed in 1.573 s total. The longer rebuild/composition path is
 available as explicit release validation and is recorded in
 [evidence/cpu-colab-r3](evidence/cpu-colab-r3/README.md).
 
+For the current DS4 `main` Bazel/CUDA 13.2 A100 pipeline, use
+[CURRENT_PIPELINE.md](CURRENT_PIPELINE.md). That recipe builds `sm_80` binaries
+locally, packages them into the current rootfs, pushes one GHCR image, then runs
+CPU admission and A100 gates without rebuilding inside Colab.
+
 ## Restore and enter an image
 
 Use Linux amd64 with Python 3.11+, GNU tar, and access to the private package.
