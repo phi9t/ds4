@@ -2,14 +2,14 @@
 
 [Back to README](../README.md)
 
-Qwen3.8-Flash-Next uses the `qwen4exp` GGUF architecture and a dedicated
-Metal/CUDA graph with gated delta-net, gated GQA, block-sparse attention,
+Qwen3.8-Flash-Next uses the `qwen4exp` GGUF architecture and a dedicated CUDA
+graph with gated delta-net, gated GQA, block-sparse attention,
 hyper-connections, n-gram embeddings, MoE, and MTP.
 
 ## Download and run
 
 ```sh
-make
+scripts/ds4 bazel -- build --config=cuda //:ds4
 ./download_model.sh qwen38-q2
 ./ds4 --ctx 8192 --prefill-chunk 1024
 ```
@@ -32,13 +32,13 @@ Q4_K gate/up and MXFP4 down experts. Context and runtime buffers still need
 RAM beyond the resident weights; start Q2 with the context and chunk above
 on a 64 GB machine. Q4 needs a larger machine.
 
-On a DGX Spark, build with `make cuda-spark` instead of `make`. Both Q2 and
-Q4 fit resident on an otherwise idle 128 GB Spark; the n-grams stay on SSD.
+On a DGX Spark, use the CUDA Bazel build. Both Q2 and Q4 fit resident on an
+otherwise idle 128 GB Spark; the n-grams stay on SSD.
 The same commands support text, vision, MTP, steering and text-session
 checkpoints in `ds4`, `ds4-agent` and `ds4-server`. No CUDA-specific model
 conversion or feature flags are needed.
 Leave `--prefill-chunk` unset on the Spark to use the faster 8192-token
-default. The 1024-token example above saves memory on smaller Macs.
+default. The 1024-token example above saves memory on smaller CUDA systems.
 
 Use the same model options with `ds4-agent` or `ds4-server`.
 Add `--mtp` for speculative decoding using the built-in MTP weights.
@@ -48,21 +48,8 @@ Add `--mtp` for speculative decoding using the built-in MTP weights.
 `qwen3.8-flash-next-reasoner` aliases. Tool calls use the native
 `<tool_call><function=...><parameter=...>` format.
 
-On Metal, `ds4-server --batched-session N` decodes the slots together. Work that
-only reads weights runs once for the whole batch, while the delta-net
-recurrence, the attention caches and the n-gram convolution stay per session.
-The slots also share one prefill workspace, so an extra slot costs its caches
-rather than another few GiB of transients. As with the other natively batched
-models, grouping changes the order of floating point reductions, so a batched
-reply can differ from the same prompt decoded alone.
-Add `--mtp` to use batched speculative decoding as well. The server accepts
-matching greedy drafts by default, including at nonzero temperature. With
-`--mtp-exact-sampling`, sampled requests use ordinary batched decoding;
-temperature-zero requests can still speculate. Default greedy acceptance also
-means a seed need not reproduce a reply under a different batching schedule.
-Speculative batches above 16 sessions, images and steering use the ordered
-fallback. CUDA currently
-decodes sessions in order.
+On this CUDA-focused fork, `ds4-server --batched-session N` schedules multiple
+slots but currently decodes Qwen3.8 sessions in order.
 
 Disk KV checkpoints include recurrent state. Rewinding to an earlier position
 replays the retained prefix on the next evaluation. The native context is
@@ -103,7 +90,8 @@ with `./download_model.sh qwen38-vision`, then use
 `/read image.png`; the server accepts `image_url` parts. Each image is resized to
 multiples of 32 pixels within 64 to 1024 tokens (`DS4_QWEN4_IMAGE_MAX_TOKENS`
 raises the cap), encoded on the GPU, and takes the model's 3D rope positions;
-live KV reuse keys on the image fingerprints. `make test-qwen4-vision`
+live KV reuse keys on the image fingerprints.
+`python3 tests/qwen4_vision_ref.py`
 compares the tower with the Hugging Face implementation using the same GGUF
 weights, dequantized to float32. It separately reports GGUF-versus-original
 checkpoint quality and GPU-versus-original agreement. Both comparisons use
@@ -115,7 +103,6 @@ not mean the quantized encoder matches the original checkpoint.
 For a small suite including OCR, diagrams, a photograph, and resizing:
 
 ```sh
-make tests/test_qwen4_vision
 uv run --with numpy --with torch --with torchvision --with pillow \
   --with safetensors --with transformers --with gguf tests/qwen4_vision_ref.py \
   --snapshot /path/to/HF-checkpoint \
@@ -141,7 +128,7 @@ To check CLI `/read` image turns and text follow-ups with ordinary and MTP
 decode, use two different PNG or JPEG images with the model-backed regression:
 
 ```sh
-make ds4
+scripts/ds4 bazel -- build --config=cuda //:ds4
 uv run tests/test_qwen4_cli_vision.py --model /path/to/main-with-mtp.gguf \
   --vision gguf/mmproj-Qwen3.8-Flash-Next-Q8_0.gguf \
   --image /path/to/first.png --image /path/to/second.png
@@ -151,29 +138,26 @@ The test checks that all four turns complete in each mode, including errors
 that the interactive CLI can report without a nonzero process exit. It saves
 the responses and diagnostics for inspection; it does not grade image content.
 
-The Metal and CUDA graphs accept Q8_0, Q4_0, F16, BF16 and F32
+The CUDA graph accepts Q8_0, Q4_0, F16, BF16 and F32
 dense weights, Q8_0/MXFP4/Q4_0/Q4_K/Q2_K/IQ2_XXS experts, F16/F32/Q8_0
 hyper-connection mixers and the original BF16 n-gram table.
 Tensor parallelism, pipeline execution and SSD expert streaming are not
 implemented for this model yet.
-ROCm is not supported. CPU code is a correctness reference, not a general
-inference backend.
+CPU code is a correctness reference, not a general inference backend.
 
 
 ## Validation
 
 ```sh
-make test-qwen4-kernels test-qwen4-q2 test-qwen4-prefill-reuse test-q8-prefill-variants
-make test-frontends
-make test-qwen4-ngrams
-make tests/test_qwen4_ngram_state
-make -B -C gguf-tools quants-shared
+scripts/ds4 bazel -- test //tests/...
+scripts/ds4 bazel -- test --config=cuda //tests:test_mxfp4_cuda
+bazel build //gguf-tools:quants-shared
 python3 -m unittest discover -s gguf-tools/tests -p test_qwen4_pack.py
 python3 -m unittest discover -s gguf-tools/tests -p test_qwen4_native_ngrams.py
 ```
 
-On CUDA, use `make test-qwen4-cuda` for the kernel tests. They compare the
-active kernels with independent CPU references, without model weights.
+The CUDA kernel tests compare the active kernels with independent CPU
+references, without model weights.
 Vision and end-to-end checks additionally require the checkpoints above.
 Run `tests/test_qwen4_ngram_state MODEL.gguf` on either backend to check
 failed disk reads during prefill, decode and MTP, then exact recovery.
@@ -247,7 +231,7 @@ see [directional steering](../dir-steering/README.md). Model-backed regressions:
 ```sh
 python3 tests/test_qwen4_steering.py --model /path/to/main-with-mtp.gguf
 ./ds4_agent_test --full-context-save /path/to/main-with-mtp.gguf
-make test-web-recovery
+python3 tests/test_web_recovery.py
 ```
 
 The agent can save an already-full text transcript without a KV payload.

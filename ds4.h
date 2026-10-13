@@ -17,6 +17,7 @@
  * header narrow so HTTP/CLI code does not depend on tensor internals. */
 
 typedef enum {
+    DS4_BACKEND_METAL,
     DS4_BACKEND_CUDA,
     DS4_BACKEND_CPU,
 } ds4_backend;

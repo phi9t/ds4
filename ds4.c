@@ -71553,7 +71553,7 @@ static int ds4_engine_open_internal(ds4_engine **out,
         if (opt->backend != DS4_BACKEND_METAL &&
             opt->backend != DS4_BACKEND_CUDA) {
             fprintf(stderr,
-                    "ds4: GLM-5.3 vision requires --metal, --cuda, or --rocm\n");
+                    "ds4: GLM-5.3 vision requires --cuda in this fork\n");
             free(e);
             *out = NULL;
             return 1;
@@ -71567,7 +71567,7 @@ static int ds4_engine_open_internal(ds4_engine **out,
         if (opt->backend == DS4_BACKEND_CUDA && gpu_cfg &&
             gpu_cfg->n_gpus > 1) {
             fprintf(stderr,
-                    "ds4: GLM-5.3 CUDA/ROCm vision currently requires one GPU\n");
+                    "ds4: GLM-5.3 CUDA vision currently requires one GPU\n");
             free(e);
             *out = NULL;
             return 1;
@@ -71661,7 +71661,7 @@ static int ds4_engine_open_internal(ds4_engine **out,
     model_open(&e->model, opt->model_path, graph_backend, !opt->inspect_only);
     if (DS4_MODEL_FAMILY == DS4_MODEL_FAMILY_DEEPSEEK41 &&
         opt->vision_path && opt->vision_path[0] && e->backend != DS4_BACKEND_METAL) {
-        fprintf(stderr, "ds4: V4.1 vision requires Metal\n");
+        fprintf(stderr, "ds4: V4.1 vision is not supported by this CUDA-only fork\n");
         ds4_engine_close(e);
         *out = NULL;
         return 1;
@@ -71678,7 +71678,7 @@ static int ds4_engine_open_internal(ds4_engine **out,
             opt->distributed.role != DS4_DISTRIBUTED_NONE || load_slice ||
             e->ssd_streaming || opt->dspark || e->power_percent != 100 ||
             (opt->mtp_path && opt->mtp_path[0])) {
-            fprintf(stderr, "ds4: Qwen3.8 requires Metal or single-GPU CUDA (or --cpu --first-token-test); "
+            fprintf(stderr, "ds4: Qwen3.8 requires single-GPU CUDA (or --cpu --first-token-test); "
                             "tensor parallelism, pipeline execution, SSD streaming, DSpark, "
                             "external MTP models and power throttling are not supported\n");
             ds4_engine_close(e);
@@ -71700,7 +71700,7 @@ static int ds4_engine_open_internal(ds4_engine **out,
             (!opt->directional_steering_file || !opt->directional_steering_file[0]) &&
             e->power_percent == 100 && opt->context_size <= 1048576;
         if (!supported) {
-            fprintf(stderr, "ds4: V4.1 requires Metal or single-GPU CUDA per rank (optional network tensor parallelism); "
+            fprintf(stderr, "ds4: V4.1 requires single-GPU CUDA per rank (optional network tensor parallelism); "
                             "DSpark, steering and legacy diagnostics are not supported (maximum context 1048576)\n");
             ds4_engine_close(e);
             *out = NULL;
@@ -71792,7 +71792,7 @@ static int ds4_engine_open_internal(ds4_engine **out,
         return 1;
     }
     if (e->ssd_streaming && !ds4_backend_supports_ssd_streaming(e->backend)) {
-        fprintf(stderr, "ds4: --ssd-streaming is currently supported only with --metal/--cuda/--rocm\n");
+        fprintf(stderr, "ds4: --ssd-streaming is currently supported only with --cuda\n");
         ds4_engine_close(e);
         *out = NULL;
         return 1;

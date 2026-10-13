@@ -1,4 +1,4 @@
-/* DeepSeek V4 Flash Vision-Exp operations shared by CUDA and ROCm. */
+/* DeepSeek V4 Flash Vision-Exp CUDA operations. */
 
 #ifndef DS4_DEEPSEEK4_VISION_TYPES_DEFINED
 #define DS4_DEEPSEEK4_VISION_TYPES_DEFINED

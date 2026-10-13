@@ -186,9 +186,10 @@ requirements. DeepSeek Vision Experimental uses a different checkpoint from
 Flash 0731; GLM 5.3 Flash and Qwen3.8 Flash Next add vision to the same text
 model through a separate encoder.
 
-DeepSeek V4.1 Flash text and vision run on Metal; text also runs on a DGX Spark.
-Q2 runs with SSD streaming on one 128 GB Mac or Spark, or resident across two
-Macs or two Sparks using RDMA. Q4 needs SSD streaming or a 512 GB Mac.
+DeepSeek V4.1 Flash text runs on supported CUDA systems in this fork.
+Q2 can run with SSD streaming on one DGX Spark, or resident across two
+Spark-class ranks using RDMA. Q4 needs SSD streaming or a larger resident CUDA
+memory budget.
 Engram tables remain on disk in every mode, so use a fast
 local SSD. See the [model guide](docs/MODELS.md#deepseek-v41-flash) for downloads
 and setup.
@@ -198,7 +199,7 @@ in the CLI or `view_image` in the native agent.
 
 Qwen3.8's smaller Q2 release has **41.73 GiB** of main/MTP weights,
 with imatrix IQ2_XXS gate/up experts and padded Q2_K down projections.
-It is the starting option for 64 GB Macs.
+It is the starting option for lower-memory CUDA systems.
 The GGUF also contains 95.37 GiB of original BF16 n-grams, read directly
 from disk rather than loaded into RAM. Keep it on a fast SSD. Start with 8K context:
 
@@ -274,7 +275,7 @@ DGX Spark results, comparison conditions, and benchmark commands.
 - [Models and vision](docs/MODELS.md): Flash, PRO, GLM, Qwen, and matching encoders.
 - [Qwen3.8 Flash Next](docs/QWEN38_FLASH_NEXT.md): model setup, MTP, vision, and validation.
 - [SSD streaming](docs/SSD_STREAMING.md): run larger than RAM and size the cache.
-- [Inference across machines](docs/DISTRIBUTED.md): two-Mac TP/RDMA and layer pipelines.
+- [Inference across machines](docs/DISTRIBUTED.md): CUDA TP/RDMA and layer pipelines.
 - [Speculative decoding](docs/SPECULATIVE_DECODING.md): DSpark, GLM and Qwen MTP, and sampling.
 - [Serving](docs/SERVER.md): APIs, images, batching, and disk KV caches.
 - [Coding agent clients](docs/CLIENTS.md): Pi, OpenCode, Codex CLI, and Claude Code.

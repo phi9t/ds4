@@ -20,6 +20,7 @@ cc_library(
     name = "core_cpu_test_hooks",
     srcs = [
         "//:ds4.c",
+        "//:ds4_image.c",
         "//:ds4_distributed.c",
         "//:ds4_tp.c",
         "//:ds4_ssd.c",
@@ -40,7 +41,7 @@ cc_library(
 )
 
 # ---------------------------------------------------------------------------
-# CPU unit tests (hermetic, no model / no GPU) — the `make test` CPU set.
+# CPU unit tests (hermetic, no model / no GPU) matching the legacy CPU set.
 # ---------------------------------------------------------------------------
 
 # Makefile: tests/test_layer_pack = test_layer_pack.o + ds4_layer_pack.o
@@ -140,10 +141,12 @@ cc_library(
     name = "core_cuda_test_hooks",
     srcs = [
         "//:ds4.c",
+        "//:ds4_image.c",
         "//:ds4_distributed.c",
         "//:ds4_tp.c",
         "//:ds4_ssd.c",
         "//:ds4_layer_pack.c",
+        "//:ds4_engram.c",
     ],
     hdrs = ["//:all_headers"],
     copts = ds4_c_copts() + ["-Wno-unused-function", "-I."],

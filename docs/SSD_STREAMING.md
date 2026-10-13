@@ -7,9 +7,9 @@ SSD streaming keeps a bounded cache of routed experts and reads missing
 experts from the GGUF. It trades speed for capacity; it does not remove the
 memory needed for other weights, activations, scratch, and the context.
 
-Metal supports streaming for DeepSeek and GLM. CUDA has streaming paths too,
-and ROCm supports GLM 5.2/5.3 streaming. Do not infer support for every model
-and tensor layout from the existence of the flag.
+This fork keeps the CUDA SSD streaming paths for supported DeepSeek and GLM
+layouts. Do not infer support for every model and tensor layout from the
+existence of the flag.
 
 ## Start with the automatic budget
 
@@ -24,15 +24,15 @@ local SSD and leave memory for the OS and other applications.
 Examples:
 
 ```sh
-# Flash Q2 on a smaller Mac.
+# Flash Q2 on a smaller CUDA system.
 ./download_model.sh ds4f-q2
 ./ds4 --ssd-streaming --ctx 32768 --nothink
 
-# GLM 5.3 Flash Q4 on a 128 GB Mac.
+# GLM 5.3 Flash Q4 with CUDA SSD streaming.
 ./download_model.sh glm53-q4
 ./ds4 --ssd-streaming --ctx 4096
 
-# PRO Q2 on a 128 GB Mac: usable for inspection, but slow.
+# PRO Q2 on a memory-constrained CUDA system: usable for inspection, but slow.
 ./download_model.sh pro-q2-imatrix
 ./ds4 --ssd-streaming --ctx 32768 --nothink
 ```
@@ -59,15 +59,14 @@ expert slots rather than a byte budget. It is also subject to memory limits.
 
 By default, GLM spends the cache budget on selected experts across all layers.
 `--ssd-streaming-full-layers N` reserves full routed prefix layers instead.
-Metal also keeps the non-routed weights resident when it can; they are needed
-by every token, and paging them back in delays generation after a prompt.
+Keep non-routed weights resident when possible; they are needed by every token,
+and paging them back in delays generation after a prompt.
 An oversized expert cache can displace those weights and slow decoding.
 More cache helps only while the rest of the working set still fits.
 
-More context and more server sessions consume more memory. Metal GLM budgeting
-includes planned and already resident sessions; a request can still be refused
-when its mandatory allocations cannot fit. Disabling the memory guard is not
-a remedy for insufficient RAM.
+More context and more server sessions consume more memory. A request can still
+be refused when its mandatory allocations cannot fit. Disabling the memory
+guard is not a remedy for insufficient RAM.
 
 Leave expert preloading enabled for normal use. `--ssd-streaming-cold` and
 `--ssd-streaming-preload-experts N` are mainly useful for controlled measurements.

@@ -31,7 +31,7 @@ exports_files([
 # //tests can compile the raw root sources (they force -I. and #include "../*").
 filegroup(
     name = "all_headers",
-    srcs = glob(["*.h", "*.inc"], allow_empty = True),
+    srcs = glob(["*.h", "*.inc"], allow_empty = True) + glob(["third_party/iris/*.h"], allow_empty = True),
 )
 
 # Backend selector: cuda (default) or cpu. The CPU build is the correctness
@@ -174,7 +174,7 @@ cc_library(
         "ds4_layer_pack.c",
         "ds4_engram.c",
     ],
-    hdrs = glob(["*.h", "*.inc"], allow_empty = True),
+    hdrs = glob(["*.h", "*.inc"], allow_empty = True) + glob(["third_party/iris/*.h"], allow_empty = True),
     copts = ds4_c_copts(),
     local_defines = _GPU_DEFINE,
 )
@@ -182,15 +182,15 @@ cc_library(
 cc_library(
     name = "prompt_prefix",
     srcs = ["ds4_prompt_prefix.c"],
-    hdrs = ["ds4_prompt_prefix.h"],
-    copts = ds4_c_copts(),
+    hdrs = glob(["*.h", "*.inc"], allow_empty = True) + glob(["third_party/iris/*.h"], allow_empty = True),
+    copts = ds4_c_copts() + ["-I."],
 )
 
 cc_library(
     name = "eval_cases",
     srcs = ["ds4_eval_cases.c"],
-    hdrs = ["ds4_eval_cases.h"],
-    copts = ds4_c_copts(),
+    hdrs = glob(["*.h", "*.inc"], allow_empty = True),
+    copts = ds4_c_copts() + ["-I."],
 )
 
 cc_library(

@@ -92,7 +92,7 @@ Targets:
   ds4f-q2-q4
        Mixed Flash quant: mostly q2 routed experts, with the last 6 layers
        using q4 routed experts. About 98 GB on disk. Good for higher
-       quality inference for 128 GB MacBooks. Works on DGX Spark but loading
+       quality inference on larger CUDA systems. Works on DGX Spark but loading
        may struggle compared to ds4f-q2.
 
   ds4f-q4
@@ -101,8 +101,8 @@ Targets:
 
   ds4f-mxfp4
        Native DeepSeek V4 Flash MXFP4 routed experts, about 156 GB on disk.
-       Supported by Metal and CUDA; Blackwell uses FP4 tensor cores for batched
-       expert work, while CUDA decode keeps Q8 activations.
+       CUDA Blackwell uses FP4 tensor cores for batched expert work, while
+       CUDA decode keeps Q8 activations.
 
   ds4f-dspark
        Optional DSpark speculative decoding support GGUF for Flash 0731, about
@@ -110,7 +110,8 @@ Targets:
 
   ds4f-vision-q2
        DeepSeek V4 Flash Vision Experimental with 2-bit routed experts, about
-       81 GiB, plus its vision encoder. Recommended for 96 and 128 GB Macs.
+       81 GiB, plus its vision encoder. Recommended for CUDA systems with
+       enough GPU memory.
 
   ds4f-vision-q2-q4
        Mixed Vision Experimental quant with routed experts in layers 37-42 at
@@ -118,7 +119,8 @@ Targets:
 
   ds4f-vision-mxfp4
        Native MXFP4 Vision Experimental model, about 145 GiB, plus its vision
-       encoder. Intended for CUDA or two 128 GB Macs using tensor parallelism.
+       encoder. Intended for large CUDA systems or two Spark-class CUDA ranks
+       using tensor parallelism.
 
   ds4f-vision-encoder
        Standalone Vision Experimental encoder, about 0.9 GiB. Use this when
@@ -130,8 +132,9 @@ Targets:
 
   ds41f-q2
        DeepSeek V4.1 Flash calibrated Q2, about 341 GiB on disk. Main weights
-       occupy 152 GiB; Engram tables stay on disk. Metal only: use SSD streaming
-       on one 128 GB Mac, tensor parallelism on two, or a larger resident Mac.
+       occupy 152 GiB; Engram tables stay on disk. CUDA: use SSD streaming on
+       one DGX Spark, tensor parallelism on two Spark-class ranks, or a larger
+       resident GPU memory budget.
 
   ds41f-vision
        Matching V4.1 Flash vision encoder, about 0.9 GiB. Add --vision FILE
@@ -139,9 +142,10 @@ Targets:
 
   ds41f-q4
        DeepSeek V4.1 Flash calibrated Q4, about 483 GiB on disk. Main weights
-       occupy 294 GiB; Engram tables stay on disk. Metal only: use SSD streaming
-       on smaller Macs or full residency on a 512 GB Mac. Downloads two parts
-       and joins them automatically; allow another 37 GiB of free disk space.
+       occupy 294 GiB; Engram tables stay on disk. CUDA: use SSD streaming with
+       a large host/storage budget or full residency on larger GPU systems.
+       Downloads two parts and joins them automatically; allow another 37 GiB
+       of free disk space.
 
   pro-q2-imatrix
        DeepSeek V4 PRO 0813 q2 imatrix quant, as a single GGUF file. About
@@ -149,11 +153,11 @@ Targets:
 
   pro-q4-layers00-30
        First half of the DeepSeek V4 PRO Q4 routed-expert quant, layers 0..30.
-       Use on the coordinator in a two-Mac-Studio distributed run. About 426 GB.
+       Use on the coordinator in a two-rank distributed run. About 426 GB.
 
   pro-q4-layers31-output
        Second half of the DeepSeek V4 PRO Q4 routed-expert quant, layers
-       31..output. Use on the worker in a two-Mac-Studio distributed run.
+       31..output. Use on the worker in a two-rank distributed run.
        About 412 GB.
 
   pro-q4-split
@@ -182,11 +186,11 @@ Targets:
 
   glm53-q2
        GLM 5.3 Flash imatrix Q2 GGUF, about 90 GiB on disk. Intended for
-       resident inference on 128 GB Macs.
+       resident inference on DGX Spark-class CUDA systems.
 
   glm53-q4
-       GLM 5.3 Flash Q4_K GGUF, about 178 GiB on disk. Intended for two-Mac
-       tensor parallelism or single-Mac SSD streaming.
+       GLM 5.3 Flash Q4_K GGUF, about 178 GiB on disk. Intended for multi-rank
+       CUDA tensor parallelism or CUDA SSD streaming.
 
   glm53-fp8
        Text-only GLM 5.3 Flash native FP8 GGUF, about 305 GiB on disk. It
@@ -202,7 +206,7 @@ Targets:
        occupy 41.73 GiB; original BF16 n-grams stay on disk.
        Imatrix IQ2_XXS gate/up and Q2_K down experts (640 logical inputs,
        padded to 768 on disk), with higher-precision dense/control tensors.
-       Smaller option for 64 GB Macs: start with --ctx 8192 and
+       Smaller option for lower-memory CUDA systems: start with --ctx 8192 and
        --prefill-chunk 1024. Context buffers need additional RAM.
        Keep the file on a local SSD. Add --mtp for speculation.
 
@@ -210,7 +214,7 @@ Targets:
        Qwen3.8-Flash-Next Q4: one 165.11 GiB GGUF. Main/MTP weights
        occupy 69.74 GiB; original BF16 n-grams stay on disk.
        Imatrix Q4_K gate/up and MXFP4 down routed experts. Fits 128 GB
-       Macs with room for context buffers. Add --mtp for speculation.
+       CUDA systems with room for context buffers. Add --mtp for speculation.
 
   qwen38-vision
        Qwen3.8-Flash-Next vision encoder, about 0.6 GB on disk. Load it

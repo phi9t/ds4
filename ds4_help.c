@@ -183,7 +183,7 @@ static void print_model_runtime(FILE *fp, const help_colors *c,
             opt(fp, c, "--mtp-margin F", "Verifier confidence margin for fast MTP acceptance. Default: 3");
             opt(fp, c, "--mtp-timing", "Enable embedded MTP and print acceptance/timing counters.");
             opt(fp, c, "--dspark", "Enable DSpark using the support GGUF passed with --mtp-model.");
-            opt(fp, c, "--dspark-confidence F", "Enable DSpark with confidence pruning threshold 0..1. Greedy/opportunistic default: resident Spark Q2 0.4, two-Spark Flash Q2/MXFP4 0, Metal 0.6, other CUDA/ROCm 0.7; exact sampling: 0.8");
+            opt(fp, c, "--dspark-confidence F", "Enable DSpark with confidence pruning threshold 0..1. Greedy/opportunistic default: resident Spark Q2 0.4, two-Spark Flash Q2/MXFP4 0, other CUDA 0.7; exact sampling: 0.8");
             opt(fp, c, "--mtp-exact-sampling", "Preserve the ordinary temperature distribution instead of accepting target-matching greedy drafts directly.");
             opt(fp, c, "--dspark-strict", "Load DSpark support but keep target-only decode.");
         } else if (tool == DS4_HELP_BENCH) {
@@ -193,7 +193,7 @@ static void print_model_runtime(FILE *fp, const help_colors *c,
         opt(fp, c, "--quality", "Prefer exact kernels where faster approximate paths exist.");
         opt(fp, c, "--warm-weights", "Touch resident weights at startup to reduce first-use stalls.");
         if (tool == DS4_HELP_DS4 || tool == DS4_HELP_BENCH) {
-            opt(fp, c, "--expert-profile FILE", "Metal-only: write routed expert locality/cache simulation JSON.");
+            opt(fp, c, "--expert-profile FILE", "Legacy routed expert locality/cache simulation JSON; ignored by CUDA.");
         }
     }
     fputc('\n', fp);
@@ -279,7 +279,7 @@ static void print_cli_diagnostics(FILE *fp, const help_colors *c) {
     opt(fp, c, "--dump-logprobs FILE", "Write greedy continuation top-logprobs as JSON.");
     opt(fp, c, "--logprobs-top-k N", "Alternatives stored by --dump-logprobs. Default: 20");
     opt(fp, c, "--decode-consistency N", "Compare N-token decode logits with a fresh full prefill.");
-    opt(fp, c, "--expert-profile FILE", "Metal-only: write routed expert locality/cache simulation JSON.");
+    opt(fp, c, "--expert-profile FILE", "Legacy routed expert locality/cache simulation JSON; ignored by CUDA.");
     opt(fp, c, "--perplexity-file FILE", "Score raw text with teacher-forced NLL.");
     opt(fp, c, "--imatrix-dataset FILE", "Rendered prompt dataset for imatrix collection.");
     opt(fp, c, "--imatrix-out FILE", "Write llama-compatible routed-MoE imatrix .dat.");
@@ -288,9 +288,9 @@ static void print_cli_diagnostics(FILE *fp, const help_colors *c) {
     opt(fp, c, "--imatrix-min-expert-samples N", "Continue until every routed expert has N samples.");
     opt(fp, c, "--head-test", "Run the output HC/logits head after the native slice.");
     opt(fp, c, "--first-token-test", "Run exact CPU whole-model pass for the first prompt token.");
-    opt(fp, c, "--metal-graph-test", "Compare first GPU-resident graph stages with CPU.");
-    opt(fp, c, "--metal-graph-full-test", "Run the GPU-resident self-token graph across all layers.");
-    opt(fp, c, "--metal-graph-prompt-test", "Compare CPU and GPU graph logits for the full prompt.");
+    opt(fp, c, "--metal-graph-test", "Legacy alias: compare first GPU-resident graph stages with CPU.");
+    opt(fp, c, "--metal-graph-full-test", "Legacy alias: run the GPU-resident self-token graph across all layers.");
+    opt(fp, c, "--metal-graph-prompt-test", "Legacy alias: compare CPU and GPU graph logits for the full prompt.");
     fputc('\n', fp);
 }
 
@@ -486,7 +486,7 @@ static void print_examples(FILE *fp, const help_colors *c, ds4_help_tool tool, c
         opt(fp, c, "coordinator", "./ds4 --role coordinator --layers 0:20 --listen 0.0.0.0 9000 -p \"Hello\" -m ds4flash.gguf");
     } else if (topic_is(topic, "runtime")) {
         if (tool == DS4_HELP_SERVER) {
-            opt(fp, c, "Metal API", "./ds4-server -m ds4flash.gguf --metal --ctx 100000");
+            opt(fp, c, "CUDA API", "./ds4-server -m ds4flash.gguf --cuda --ctx 100000");
             opt(fp, c, "quiet API", "./ds4-server --power 60 --host 127.0.0.1 --port 8000");
         } else if (tool == DS4_HELP_AGENT) {
             opt(fp, c, "agent", "./ds4-agent -m ds4flash.gguf --ctx 100000");
@@ -498,7 +498,7 @@ static void print_examples(FILE *fp, const help_colors *c, ds4_help_tool tool, c
             opt(fp, c, "eval", "./ds4-eval --questions 10 --ctx 100000");
             opt(fp, c, "CPU debug", "./ds4-eval --cpu --questions 1 --tokens 32");
         } else {
-            opt(fp, c, "Metal", "./ds4 -m ds4flash.gguf --metal -c 100000");
+            opt(fp, c, "CUDA", "./ds4 -m ds4flash.gguf --cuda -c 100000");
             opt(fp, c, "quiet thermals", "./ds4 -p \"Summarize README\" --power 50");
         }
     } else if (topic_is(topic, "steering")) {

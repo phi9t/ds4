@@ -17,7 +17,7 @@ address or provide access control.
 
 The selected build chooses the backend. Pass `-m FILE` for an explicit model.
 Use `--chdir /path/to/ds4` when starting outside the project directory so
-relative runtime files such as Metal kernels can be found.
+relative runtime files can be found.
 
 ## APIs
 
@@ -68,13 +68,6 @@ The startup line reports both figures.
 
 | Backend/model | Decode execution |
 | --- | --- |
-| Metal, resident Flash | Native shared-expert/QKV batching where supported |
-| Metal, resident V4.1 Flash | Native decoding for 2-8 sessions |
-| Metal RDMA TP, V4.1 Flash | Native decoding for 3-8 sessions; ordered fallback for two |
-| Metal SSD streaming, V4.1 Flash | Ordered fallback |
-| Metal, GLM 5.2 | Ordered fallback |
-| Metal, GLM 5.3 | Native batching through 2051 visible tokens; ordered fallback afterward |
-| Metal, Qwen3.8 Flash Next | Native batching of the shared work; recurrent state, caches and PLE history stay per session |
 | CUDA, supported multi-GPU Flash TP layout | Native grouped decode and mixed prefill/decode |
 | Single-GPU CUDA, including Spark | Ordered fallback |
 
@@ -85,10 +78,8 @@ use the ordered fallback.
 
 Long prefills yield to active decoders in bounded intervals, normally 128
 tokens. `--mixed-prefill-quantum N` changes that interval for testing.
-Session-batched serving uses ordinary target decoding, except Qwen3.8 on
-Metal, where `--mtp` also batches speculative decoding. Its
-`--mtp-exact-sampling` mode uses ordinary batches for nonzero-temperature
-requests. Other models do not use MTP/DSpark while session batching is active.
+Session-batched serving uses ordinary target decoding. Other models do not use
+MTP/DSpark while session batching is active.
 For the eight-L40S example, see [CUDA GPUs](CUDA_MULTI_GPU.md#serve-multiple-users).
 
 ## Images

@@ -12,23 +12,17 @@ It also records which checks were not completed. A smoke test is not full QA.
 Model-free checks include:
 
 ```sh
-make ds4_test ds4_agent_test test-session-state
-./ds4_test --server
-./ds4_agent_test
+scripts/ds4 bazel -- test //tests/...
 ```
 
-On Metal, small GPU tensor tests are available without loading a full GGUF:
+The focused CUDA FP4 check is model-free:
 
 ```sh
-make tests/test_session_state_gpu tests/test_glm53_kda tests/test_mxfp4_metal
-./tests/test_session_state_gpu
-./tests/test_glm53_kda
-./tests/test_mxfp4_metal
+scripts/ds4 bazel -- test --config=cuda //tests:test_mxfp4_cuda
 ```
 
-`make test` also includes model-backed tests. Select the right GGUF and ensure
-that it fits before running it; do not accidentally load a large model on a
-single device during multi-GPU QA. ROCm has `make test-rocm`.
+Model-backed tests need the right GGUF and enough memory; do not accidentally
+load a large model on a single device during multi-GPU QA.
 
 Official-vector tests must use continuations from the same checkpoint as the
 GGUF. Flash 0731 and Vision Experimental are not interchangeable fixtures.

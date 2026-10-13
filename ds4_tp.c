@@ -717,7 +717,7 @@ int ds4_tp_validate_engine_options(
     supported_backend |= opt->backend == DS4_BACKEND_CUDA;
 #endif
     if (!supported_backend) {
-        tp_set_err(err, errlen, "network tensor parallelism requires Metal or supported CUDA models");
+        tp_set_err(err, errlen, "network tensor parallelism requires a supported CUDA model");
         return 0;
     }
     if (opt->backend == DS4_BACKEND_CUDA && (opt->cuda_tensor_parallel || opt->ssd_streaming)) {
