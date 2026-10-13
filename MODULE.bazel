@@ -1,0 +1,21 @@
+module(
+    name = "ds4",
+    version = "0.0.0",
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.22")
+bazel_dep(name = "rules_cuda", version = "0.3.0")
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
+
+cuda = use_extension("@rules_cuda//cuda:extensions.bzl", "toolchain")
+
+# Prefer a CUDA 13.2 redistributable so Bazel's hermetic nvcc stays aligned with
+# the repo rootfs contract (cu132) and the host B200 driver floor. The redist
+# supplies the compiler/toolkit for build-time, while runtime execution still
+# uses the host driver projected into the rootfs.
+cuda.redist_json(
+    name = "cuda_13_2_2_redist",
+    version = "13.2.2",
+)
+cuda.toolkit(name = "cuda")
+use_repo(cuda, "cuda")

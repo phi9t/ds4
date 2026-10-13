@@ -11,18 +11,17 @@ is when an important correctness bug is fixed and it requires some speed penalty
 
 ## Correctness Regression Tests
 
-Build the default backend first:
+Build via the Bazel + rootfs path (the only build path):
 
 ```sh
-make clean
-make
+scripts/ds4 bazel -- build --config=cuda //:ds4
 ```
 
-The C test runner is `ds4_test`. Running it without arguments is equivalent to
-`--all`:
+The C test runner is `ds4_test`. Run the hermetic unit/regression suite with
+bazel:
 
 ```sh
-make test
+scripts/ds4 bazel -- test //tests/...
 ```
 
 Useful narrower checks:
@@ -59,17 +58,18 @@ DS4_TEST_VECTOR_FILE=/path/to/official.vec ./ds4_test --logprob-vectors
 DS4_TEST_LONG_PROMPT=/path/to/prompt.txt ./ds4_test --long-context
 ```
 
-For CUDA-specific changes, test on a CUDA machine:
+For CUDA-specific changes, test on a CUDA machine. Build and run the CUDA test
+targets (the FP4 numeric check is the wired CUDA test):
 
 ```sh
-make
-make cuda-regression
+scripts/ds4 bazel -- build --config=cuda //:ds4
+scripts/ds4 bazel -- test --config=cuda //tests:test_mxfp4_cuda
 ```
 
-For CPU portability, at least verify that the CPU target still builds:
+For CPU portability, at least verify that the CPU reference target still builds:
 
 ```sh
-make cpu
+scripts/ds4 bazel -- build --//:backend=cpu //:ds4
 ```
 
 The CPU backend is a reference/debug path, not the production performance

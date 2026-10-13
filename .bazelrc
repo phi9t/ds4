@@ -1,0 +1,27 @@
+common --enable_bzlmod
+build --workspace_status_command=bazel/stamp_status.sh
+
+build --jobs=HOST_CPUS
+
+# Bazel caches live under the rootfs writable bind, never a host-absolute path.
+startup --output_base=/ds4/cache/bazel/output
+build --disk_cache=/ds4/cache/bazel/disk
+build --repository_cache=/ds4/cache/bazel/repo
+
+build --flag_alias=cuda_archs=@rules_cuda//cuda:archs
+build --flag_alias=cuda_compiler=@rules_cuda//cuda:compiler
+build --flag_alias=cuda_enable=@rules_cuda//cuda:enable
+
+build --@rules_cuda//cuda:enable=False
+build --build_tag_filters=-cuda
+test --test_tag_filters=-cuda
+
+# --config=cuda: the datacenter Blackwell (sm_100) build.
+build:cuda --build_tag_filters=
+test:cuda --test_tag_filters=
+build:cuda --@rules_cuda//cuda:enable=True
+build:cuda --@rules_cuda//cuda:compiler=nvcc
+build:cuda --@rules_cuda//cuda:runtime=@cuda//:cuda_runtime
+build:cuda --@rules_cuda//cuda:archs=compute_100:sm_100
+
+test --test_output=errors

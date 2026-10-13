@@ -1,0 +1,307 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cuda//cuda:defs.bzl", "cuda_library")
+load("//bazel:defs.bzl", "ds4_c_copts", "ds4_cuda_copts")
+
+package(default_visibility = ["//visibility:private"])
+
+# ---------------------------------------------------------------------------
+# Test-support libraries: specially-compiled variants of the root TUs.
+#
+# The Makefile's `test` target links a few objects that the shared //:core and
+# //:gpu_args libraries do NOT provide: ds4.c built with -DDS4_NO_GPU
+# -DDS4_TEST_HOOKS (the CPU test-hooks oracle) and ds4_gpu_args.c built with
+# -DDS4_NO_GPU. Reproduce those exact -D flags here as dedicated libraries so
+# the tests link the same code the Makefile does, without touching //:core.
+# ---------------------------------------------------------------------------
+
+# Makefile: ds4_cpu_test_hooks.o = ds4.c with
+#   -Wno-unused-function -DDS4_NO_GPU -DDS4_TEST_HOOKS  (CPU, no CUDA)
+cc_library(
+    name = "core_cpu_test_hooks",
+    srcs = [
+        "//:ds4.c",
+        "//:ds4_distributed.c",
+        "//:ds4_tp.c",
+        "//:ds4_ssd.c",
+        "//:ds4_layer_pack.c",
+    ],
+    hdrs = ["//:all_headers"],
+    copts = ds4_c_copts() + ["-Wno-unused-function", "-I."],
+    local_defines = ["DS4_NO_GPU", "DS4_TEST_HOOKS"],
+)
+
+# Makefile: ds4_gpu_args_cpu.o = ds4_gpu_args.c with -DDS4_NO_GPU
+cc_library(
+    name = "gpu_args_cpu",
+    srcs = ["//:ds4_gpu_args.c"],
+    hdrs = ["//:all_headers"],
+    copts = ds4_c_copts() + ["-I."],
+    local_defines = ["DS4_NO_GPU"],
+)
+
+# ---------------------------------------------------------------------------
+# CPU unit tests (hermetic, no model / no GPU) — the `make test` CPU set.
+# ---------------------------------------------------------------------------
+
+# Makefile: tests/test_layer_pack = test_layer_pack.o + ds4_layer_pack.o
+# (only the packer TU, no GPU symbols) -> a dedicated minimal library.
+cc_library(
+    name = "layer_pack",
+    srcs = ["//:ds4_layer_pack.c"],
+    hdrs = ["//:all_headers"],
+    copts = ds4_c_copts() + ["-I."],
+)
+
+cc_test(
+    name = "test_layer_pack",
+    srcs = ["test_layer_pack.c"],
+    copts = ds4_c_copts() + ["-I."],
+    linkopts = ["-lm", "-pthread"],
+    deps = [":layer_pack"],
+)
+
+# Makefile: tests/test_gpu_args = test_gpu_args.o(-DDS4_NO_GPU) + ds4_gpu_args_cpu.o
+cc_test(
+    name = "test_gpu_args",
+    srcs = ["test_gpu_args.c"],
+    copts = ds4_c_copts() + ["-I.", "-DDS4_NO_GPU"],
+    linkopts = ["-lm", "-pthread"],
+    deps = [":gpu_args_cpu"],
+)
+
+# Makefile: tests/test_engine_mgpu_placement = test.o + ds4_cpu_test_hooks.o +
+#   ds4_distributed.o + ds4_tp.o + ds4_ssd.o + ds4_layer_pack.o
+cc_test(
+    name = "test_engine_mgpu_placement",
+    srcs = ["test_engine_mgpu_placement.c"],
+    copts = ds4_c_copts() + ["-I."],
+    linkopts = ["-lm", "-pthread"],
+    deps = [":core_cpu_test_hooks"],
+)
+
+# ---------------------------------------------------------------------------
+# Standalone quant dot-product unit tests (pure C99, no deps).
+# ---------------------------------------------------------------------------
+
+# Makefile: q4k-dot-test = -O2 -std=c99 -lm -pthread, standalone
+cc_test(
+    name = "test_q4k_dot",
+    srcs = ["test_q4k_dot.c"],
+    copts = ["-O2", "-Wall", "-Wextra", "-std=c99"],
+    linkopts = ["-lm", "-pthread"],
+)
+
+# Makefile: mxfp4-dot-test = -O2 -std=c99 -lm, standalone
+cc_test(
+    name = "test_mxfp4_dot",
+    srcs = ["test_mxfp4_dot.c"],
+    copts = ["-O2", "-Wall", "-Wextra", "-std=c99"],
+    linkopts = ["-lm"],
+)
+
+# ---------------------------------------------------------------------------
+# CUDA unit tests (require --config=cuda; tagged "cuda").
+# ---------------------------------------------------------------------------
+
+# Makefile: tests/test_mxfp4_cuda = test_mxfp4_cuda.cu + $(MMQ_OBJS)
+# FP4 unit check on the B200. Hermetic: no model required. The .cu (with its
+# own main()) must be compiled by nvcc, so it is a cuda_library; a thin cc_test
+# links it into a runnable test binary.
+cuda_library(
+    name = "test_mxfp4_cuda_obj",
+    srcs = ["test_mxfp4_cuda.cu"],
+    copts = ds4_cuda_copts(),
+    deps = ["//cuda/mmq:mmq"],
+    tags = ["cuda"],
+)
+
+cc_test(
+    name = "test_mxfp4_cuda",
+    linkopts = ["-lm", "-pthread"],
+    # bazel test sandboxes the runner; the host NVIDIA driver (libcuda) is bound
+    # into the rootfs at /run/nvidia-driver/lib by enter_rootfs.sh. Point the
+    # test process at it (plus the pinned CUDA runtime) so cudaSetDevice sees a
+    # driver new enough for the CUDA 13.2 runtime.
+    env = {"LD_LIBRARY_PATH": "/run/nvidia-driver/lib:/usr/local/cuda/lib64"},
+    tags = ["cuda"],
+    deps = [":test_mxfp4_cuda_obj"],
+)
+
+# ---------------------------------------------------------------------------
+# Heavier CUDA engine tests. These link the CUDA test-hooks build of ds4.c and
+# the full CUDA path; most require a live model (DS4_TEST_MODEL) and/or a GPU
+# to actually run, so they are tagged "manual" to keep them out of
+# `bazel test //tests/...`. They are wired so they *build* under --config=cuda.
+# ---------------------------------------------------------------------------
+
+# Makefile: ds4_cuda_test_hooks.o = ds4.c with
+#   -Wno-unused-function -DDS4_TEST_HOOKS -I$CUDA_HOME/include  (CUDA, NO DS4_NO_GPU)
+cc_library(
+    name = "core_cuda_test_hooks",
+    srcs = [
+        "//:ds4.c",
+        "//:ds4_distributed.c",
+        "//:ds4_tp.c",
+        "//:ds4_ssd.c",
+        "//:ds4_layer_pack.c",
+    ],
+    hdrs = ["//:all_headers"],
+    copts = ds4_c_copts() + ["-Wno-unused-function", "-I."],
+    local_defines = ["DS4_TEST_HOOKS"],
+    tags = ["cuda"],
+)
+
+# Small CUDA support lib: kvstore + rax, matching the Makefile engine link sets.
+cc_library(
+    name = "engine_support",
+    srcs = [
+        "//:ds4_kvstore.c",
+        "//:rax.c",
+    ],
+    hdrs = ["//:all_headers"],
+    copts = ds4_c_copts() + ["-I."],
+    tags = ["cuda"],
+)
+
+cc_library(
+    name = "ds4_server_include",
+    textual_hdrs = ["//:ds4_server.c"],
+    tags = ["cuda"],
+)
+
+cc_library(
+    name = "ds4_agent_include",
+    textual_hdrs = ["//:ds4_agent.c"],
+    tags = ["cuda"],
+)
+
+# Makefile: tests/test_sampling = test_sampling.o(-DDS4_TEST_HOOKS) +
+#   ds4_cuda_test_hooks.o + ds4_gpu_args.o + ds4_kvstore.o + rax.o +
+#   ds4_distributed.o + ds4_tp.o + ds4_ssd.o + ds4_cuda.o + ds4_layer_pack.o + MMQ
+cc_test(
+    name = "test_sampling",
+    srcs = ["test_sampling.c"],
+    copts = ds4_c_copts() + ["-I.", "-DDS4_TEST_HOOKS"],
+    linkopts = ["-lm", "-pthread"],
+    tags = ["cuda", "manual"],
+    deps = [
+        ":core_cuda_test_hooks",
+        ":engine_support",
+        "//:cuda",
+        "//:gpu_args",
+        "//cuda/mmq:mmq",
+    ],
+)
+
+_CUDA_SIMPLE_DEPS = [
+    "//:cuda",
+    "//cuda/mmq:mmq",
+]
+
+[
+    cc_test(
+        name = name,
+        srcs = [name + ".c"],
+        copts = ds4_c_copts() + ["-I."],
+        linkopts = ["-lm", "-pthread"],
+        tags = ["cuda", "manual"],
+        deps = _CUDA_SIMPLE_DEPS,
+    )
+    for name in [
+        "test_gpu_xdev",
+        "test_gpu_model_cache",
+        "test_gpu_lookup_cache_strict",
+    ]
+]
+
+_ENGINE_CORE_DEPS = [
+    ":engine_support",
+    "//:build_stamp",
+    "//:core",
+    "//:cuda",
+    "//:gpu_args",
+    "//cuda/mmq:mmq",
+]
+
+[
+    cc_test(
+        name = name,
+        srcs = [name + ".c"],
+        copts = ds4_c_copts() + ["-I."],
+        linkopts = ["-lm", "-pthread"],
+        tags = ["cuda", "manual"],
+        deps = _ENGINE_CORE_DEPS,
+    )
+    for name in [
+        "test_engine_mgpu_refusal",
+        "test_engine_correctness",
+        "test_cuda_session_batch",
+    ]
+]
+
+_ENGINE_HOOK_DEPS = [
+    ":core_cuda_test_hooks",
+    ":engine_support",
+    "//:cuda",
+    "//:gpu_args",
+    "//cuda/mmq:mmq",
+]
+
+[
+    cc_test(
+        name = name,
+        srcs = [name + ".c"],
+        copts = ds4_c_copts() + ["-I.", "-DDS4_TEST_HOOKS"],
+        linkopts = ["-lm", "-pthread"],
+        tags = ["cuda", "manual"],
+        deps = _ENGINE_HOOK_DEPS,
+    )
+    for name in [
+        "test_engine_mgpu_runtime",
+        "test_cuda_mixed_batch",
+    ]
+]
+
+# Makefile: ds4_test = tests/ds4_test.c (includes ds4_server.c) + ds4_help.o +
+# ds4_kvstore.o + rax.o + CORE_OBJS. ds4_server.c uses only kvstore/rax from
+# the net layer here, so use :engine_support rather than //:net to avoid
+# double-defining those symbols.
+cc_test(
+    name = "ds4_test",
+    srcs = ["ds4_test.c"],
+    copts = ds4_c_copts() + ["-Wno-unused-function", "-I."],
+    linkopts = ["-lm", "-pthread"],
+    tags = ["cuda", "manual"],
+    deps = [
+        ":ds4_server_include",
+        ":engine_support",
+        "//:build_stamp",
+        "//:core",
+        "//:cuda",
+        "//:gpu_args",
+        "//:help",
+        "//cuda/mmq:mmq",
+    ],
+)
+
+# Makefile: ds4_agent_test = tests/ds4_agent_test.c (includes ds4_agent.c) +
+# ds4_help.o + ds4_web.o + ds4_kvstore.o + linenoise.o + CORE_OBJS. //:net
+# owns ds4_web plus kvstore/rax; do not also add :engine_support.
+cc_test(
+    name = "ds4_agent_test",
+    srcs = ["ds4_agent_test.c"],
+    copts = ds4_c_copts() + ["-Wno-unused-function", "-I."],
+    linkopts = ["-lm", "-pthread"],
+    tags = ["cuda", "manual"],
+    deps = [
+        ":ds4_agent_include",
+        "//:build_stamp",
+        "//:core",
+        "//:cuda",
+        "//:gpu_args",
+        "//:help",
+        "//:net",
+        "//:repl",
+        "//cuda/mmq:mmq",
+    ],
+)

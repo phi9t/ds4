@@ -1,0 +1,15 @@
+load("@rules_cuda//cuda:defs.bzl", "cuda_library")
+load("//bazel:defs.bzl", "ds4_cuda_copts", "DS4_MXF4_DEFINES")
+
+package(default_visibility = ["//visibility:public"])
+
+cuda_library(
+    name = "mmq",
+    srcs = glob(["*.cu"]),
+    hdrs = glob(["*.cuh", "*.h"]) + glob(["vendors/*.h"]),
+    copts = ds4_cuda_copts(),
+    local_defines = DS4_MXF4_DEFINES,
+    includes = ["."],
+    deps = ["@cuda//:cublas"],
+    tags = ["cuda"],
+)

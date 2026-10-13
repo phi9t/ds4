@@ -12,6 +12,17 @@
 /gguf
 /core
 /core.*
+
+# Repo-local bwrap rootfs (built by scripts/rootfs/build_rootfs.sh).
+/scripts/rootfs/rootfs
+/scripts/rootfs/.rootfs.stage.*
+
+# Bazel is the only build path: convenience symlinks + rootfs-local caches.
+/bazel-bin
+/bazel-ds4
+/bazel-out
+/bazel-testlogs
+/.ds4/
 /tests/test_engine_mgpu_placement
 /tests/test_engine_mgpu_runtime
 /tests/test_engine_mgpu_refusal

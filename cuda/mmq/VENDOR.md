@@ -113,7 +113,8 @@ cp /tmp/llama-research/ggml/src/ggml-cuda/vendors/cuda.h vendors/
 # Verify the shim still covers all referenced symbols:
 grep -hoE 'GGML_[A-Z_]+|ggml_[a-z_]+' *.cuh *.cu *.h | sort -u > /tmp/symbols.new
 diff /tmp/symbols.last /tmp/symbols.new  # check for newly-introduced names
-# Update this VENDOR.md's commit pin and run `make cuda CUDA_ARCH=sm_120`.
+# Update this VENDOR.md's commit pin and rebuild the mmq tier:
+# `scripts/ds4 bazel -- build --config=cuda //cuda/mmq:mmq`.
 ```
 
 If the new symbols are minor (e.g., new `GGML_CUDA_CC_*` constants), they

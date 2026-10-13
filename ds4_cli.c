@@ -1,4 +1,5 @@
 #include "ds4.h"
+#include "ds4_build.h"
 #include "ds4_distributed.h"
 #include "ds4_gpu_args.h"
 #include "ds4_tp.h"
@@ -218,27 +219,16 @@ static float parse_float_range(const char *s, const char *opt, float min, float 
 }
 
 static ds4_backend parse_backend(const char *s) {
-    if (!strcmp(s, "metal")) return DS4_BACKEND_METAL;
-#ifdef DS4_ROCM_BUILD
-    if (!strcmp(s, "rocm")) return DS4_BACKEND_CUDA;
-#else
     if (!strcmp(s, "cuda")) return DS4_BACKEND_CUDA;
-#endif
     if (!strcmp(s, "cpu")) return DS4_BACKEND_CPU;
     fprintf(stderr, "ds4: invalid backend: %s\n", s);
-#ifdef DS4_ROCM_BUILD
-    fprintf(stderr, "ds4: valid backends are: metal, rocm, cpu\n");
-#else
-    fprintf(stderr, "ds4: valid backends are: metal, cuda, cpu\n");
-#endif
+    fprintf(stderr, "ds4: valid backends are: cuda, cpu\n");
     exit(2);
 }
 
 static ds4_backend default_backend(void) {
 #ifdef DS4_NO_GPU
     return DS4_BACKEND_CPU;
-#elif defined(__APPLE__)
-    return DS4_BACKEND_METAL;
 #else
     return DS4_BACKEND_CUDA;
 #endif
@@ -1954,6 +1944,13 @@ static cli_config parse_options(int argc, char **argv) {
             usage(stdout, topic);
             exit(0);
         }
+        if (!strcmp(arg, "--build-id")) {
+            /* Report which backend/arch/CUDA/git built this binary and exit, so
+             * a launch or scripts/verify.sh can confirm the right build without
+             * trusting the (backend-agnostic) ./ds4 filename. */
+            printf("%s\n", ds4_build_id());
+            exit(0);
+        }
         char dist_parse_err[256] = {0};
         ds4_dist_cli_parse_result dist_parse = ds4_dist_parse_cli_arg(arg,
                                                                       &i,
@@ -2118,15 +2115,8 @@ static cli_config parse_options(int argc, char **argv) {
             c.engine.backend = parse_backend(need_arg(&i, argc, argv, arg));
         } else if (!strcmp(arg, "--cpu")) {
             c.engine.backend = DS4_BACKEND_CPU;
-        } else if (!strcmp(arg, "--metal")) {
-            c.engine.backend = DS4_BACKEND_METAL;
-#ifdef DS4_ROCM_BUILD
-        } else if (!strcmp(arg, "--rocm")) {
-            c.engine.backend = DS4_BACKEND_CUDA;
-#else
         } else if (!strcmp(arg, "--cuda")) {
             c.engine.backend = DS4_BACKEND_CUDA;
-#endif
         } else if (!strcmp(arg, "--gpu-vram")) {
             c.gpu_vram_arg = need_arg(&i, argc, argv, arg);
         } else if (!strcmp(arg, "--gpu-devices")) {
@@ -2149,7 +2139,7 @@ static cli_config parse_options(int argc, char **argv) {
             c.gen.imatrix_dataset_path = need_arg(&i, argc, argv, arg);
         } else if (!strcmp(arg, "--imatrix-out")) {
             c.gen.imatrix_output_path = need_arg(&i, argc, argv, arg);
-            c.engine.backend = DS4_BACKEND_METAL;
+            c.engine.backend = DS4_BACKEND_CUDA;
         } else if (!strcmp(arg, "--imatrix-max-prompts")) {
             c.gen.imatrix_max_prompts = parse_int(need_arg(&i, argc, argv, arg), arg);
         } else if (!strcmp(arg, "--imatrix-max-tokens")) {
@@ -2174,27 +2164,12 @@ static cli_config parse_options(int argc, char **argv) {
             c.gen.first_token_test = true;
         } else if (!strcmp(arg, "--metal-graph-test")) {
             c.gen.metal_graph_test = true;
-#ifdef DS4_ROCM_BUILD
-            c.engine.backend = DS4_BACKEND_CUDA;
-#else
-            c.engine.backend = DS4_BACKEND_METAL;
-#endif
         } else if (!strcmp(arg, "--metal-graph-full-test")) {
             c.gen.metal_graph_full_test = true;
-#ifdef DS4_ROCM_BUILD
-            c.engine.backend = DS4_BACKEND_CUDA;
-#else
-            c.engine.backend = DS4_BACKEND_METAL;
-#endif
         } else if (!strcmp(arg, "--metal-graph-prompt-test")) {
             c.gen.metal_graph_prompt_test = true;
-#ifdef DS4_ROCM_BUILD
-            c.engine.backend = DS4_BACKEND_CUDA;
-#else
-            c.engine.backend = DS4_BACKEND_METAL;
-#endif
         } else if (!strcmp(arg, "--metal-graph-generate")) {
-            fprintf(stderr, "ds4: --metal-graph-generate was removed; --metal is the graph path\n");
+            fprintf(stderr, "ds4: --metal-graph-generate was removed; --cuda is the graph path\n");
             exit(2);
         } else if (!strcmp(arg, "--inspect")) {
             c.inspect = true;

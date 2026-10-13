@@ -1,0 +1,5 @@
+# The repo-local bwrap rootfs is a full OS tree bound into the workspace; Bazel
+# must not descend into it (it contains its own bazel cache and symlinks).
+scripts/rootfs/rootfs
+.ds4
+misc

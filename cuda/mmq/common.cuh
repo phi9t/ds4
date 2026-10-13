@@ -52,6 +52,10 @@
 #define GGML_CUDA_CC_ADA_LOVELACE    890
 // While BW spans CC 1000, 1100 & 1200, we are integrating Tensor Core instructions available to 1200 family, see
 // https://docs.nvidia.com/cutlass/media/docs/cpp/blackwell_functionality.html#blackwell-sm120-gemms
+// The FP4 warp-level MMA (mma.sync ... kind::mxf4.block_scale) is a consumer/RTX
+// Blackwell (sm_120/cc 1200) feature; datacenter Blackwell (sm_100, cc 1000) only
+// exposes block-scaled FP4 via tcgen05.mma, which these kernels do not use. So the
+// FP4 MMQ path is gated at cc 1200 and sm_100 (B200) uses the Q8 fallback.
 #define GGML_CUDA_CC_BLACKWELL       1200
 #define GGML_CUDA_CC_DGX_SPARK       1210
 #define GGML_CUDA_CC_RUBIN           1300

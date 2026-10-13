@@ -777,11 +777,7 @@ int main(int argc, char **argv) {
 
     ds4_engine_options opt = {
         .model_path = model_path,
-#ifdef __APPLE__
-        .backend = DS4_BACKEND_METAL,
-#else
         .backend = DS4_BACKEND_CUDA,
-#endif
         .n_threads = 0,
         .context_size = ctx_size,
         .placement_ctx_hint = ctx_size,
@@ -811,9 +807,6 @@ int main(int argc, char **argv) {
 
     ds4_engine *engine = NULL;
     if (gpu_vram_arg || gpu_devices_arg) {
-#ifdef __APPLE__
-        die("score_official: CUDA GPU placement is unavailable on macOS");
-#else
         ds4_gpu_config gpu_cfg = {0};
         bool skip_cuda = false;
         char gpu_err[256];
@@ -829,7 +822,6 @@ int main(int argc, char **argv) {
         if (ds4_engine_create_with_gpu_config(&engine, &opt, &gpu_cfg) != 0) {
             die("failed to open model");
         }
-#endif
     } else {
         if (cuda_tensor_parallel) {
             die("score_official: --cuda-tensor-parallel requires --gpu-vram or --gpu-devices");

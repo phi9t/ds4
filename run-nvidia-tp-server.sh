@@ -41,8 +41,8 @@ check_timeout() {
 }
 
 check_prerequisites() {
-    [[ -x ./ds4-server ]] ||
-        die './ds4-server is not built; run `make cuda-generic` first'
+    [[ -x "$ROOT/bazel-bin/ds4-server" ]] ||
+        die './ds4-server is not built; run `scripts/ds4 bazel -- build --config=cuda //:ds4-server` first (binary lands at bazel-bin/ds4-server)'
     [[ -f "$MODEL" ]] ||
         die "model not found: $MODEL"
 }
@@ -64,8 +64,7 @@ is_managed_server() {
     [[ "$cwd" == "$ROOT" ]] || return 1
     mapfile -d '' -t argv < "/proc/$pid/cmdline" || return 1
     ((${#argv[@]} > 0)) || return 1
-    [[ "${argv[0]}" == "./ds4-server" ||
-       "${argv[0]}" == "$ROOT/ds4-server" ]] || return 1
+    [[ "${argv[0]}" == "$ROOT/bazel-bin/ds4-server" ]] || return 1
     for arg in "${argv[@]}"; do
         [[ "$arg" == "--cuda-tensor-parallel" ]] && return 0
     done
@@ -125,7 +124,7 @@ stop_server() {
 
 run_server() {
     check_prerequisites
-    exec ./ds4-server \
+    exec "$ROOT/bazel-bin/ds4-server" \
         --cuda \
         --cuda-tensor-parallel \
         --gpu-devices 0,2,4,6,1,3,5,7 \

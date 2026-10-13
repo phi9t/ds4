@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CLI option smoke tests. Run from the repo root via `make test`.
+# CLI option smoke tests. Run from the repo root via `scripts/ds4 bazel -- test //tests/...`.
 # These do not exercise CUDA or tensor-parallel hardware.
 set -uo pipefail
 

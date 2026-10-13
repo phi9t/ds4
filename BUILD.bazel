@@ -1,0 +1,289 @@
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load("@rules_cuda//cuda:defs.bzl", "cuda_library")
+load("//bazel:defs.bzl", "ds4_c_copts", "ds4_cuda_copts")
+
+package(default_visibility = ["//visibility:public"])
+
+# Root sources consumed by dedicated test-support libraries in //tests. Those
+# tests link specially-compiled variants of these TUs (e.g. ds4.c with
+# -DDS4_NO_GPU -DDS4_TEST_HOOKS), which the shared //:core / //:gpu_args
+# libraries do not provide, so tests/BUILD.bazel recompiles the raw sources.
+exports_files([
+    "ds4.c",
+    "ds4_image.c",
+    "ds4_gpu_args.c",
+    "ds4_distributed.c",
+    "ds4_tp.c",
+    "ds4_ssd.c",
+    "ds4_layer_pack.c",
+    "ds4_engram.c",
+    "ds4_prompt_prefix.c",
+    "ds4_eval_cases.c",
+    "ds4_kvstore.c",
+    "ds4_server.c",
+    "ds4_agent.c",
+    "rax.c",
+])
+
+# Root headers/includes, exposed so the dedicated test-support libraries in
+# //tests can compile the raw root sources (they force -I. and #include "../*").
+filegroup(
+    name = "all_headers",
+    srcs = glob(["*.h", "*.inc"], allow_empty = True),
+)
+
+# Backend selector: cuda (default) or cpu. The CPU build is the correctness
+# oracle -- it drops every @cuda// dep, compiles the GPU-guarded C sources with
+# -DDS4_NO_GPU, and stamps a cpu identity (no cuda= field).
+string_flag(
+    name = "backend",
+    build_setting_default = "cuda",
+    values = ["cuda", "cpu"],
+)
+
+config_setting(
+    name = "backend_cpu",
+    flag_values = {":backend": "cpu"},
+)
+
+config_setting(
+    name = "backend_cuda",
+    flag_values = {":backend": "cuda"},
+)
+
+config_setting(
+    name = "cuda_disabled",
+    flag_values = {"@rules_cuda//cuda:enable": "False"},
+)
+
+selects.config_setting_group(
+    name = "cuda_enabled_gpu_backend",
+    match_all = [
+        "@rules_cuda//cuda:is_enabled",
+        ":backend_cuda",
+    ],
+)
+
+selects.config_setting_group(
+    name = "cpu_binary",
+    match_any = [
+        ":backend_cpu",
+        ":cuda_disabled",
+    ],
+)
+
+# A binary is the real GPU engine only when both axes agree:
+# rules_cuda is enabled and the backend flag is cuda. Otherwise it is the CPU
+# oracle: compile GPU-guarded C TUs with -DDS4_NO_GPU, link no @cuda deps, and
+# stamp backend=cpu/arch=cpu. This keeps a bare `bazel build //...` useful
+# (CPU binaries) while `--config=cuda` is the only CUDA production path.
+_GPU_DEFINE = select({
+    ":cuda_enabled_gpu_backend": [],
+    ":cpu_binary": ["DS4_NO_GPU"],
+})
+
+# Identity -D defines fed to the real ds4_build.c. The CPU value omits
+# DS4_BUILD_CUDA so ds4_build.c's empty-string default drops the cuda= field.
+_BUILD_IDENTITY_DEFINES = select({
+    ":cuda_enabled_gpu_backend": [
+        "DS4_BUILD_BACKEND=\\\"cuda\\\"",
+        "DS4_BUILD_ARCH=\\\"sm_100\\\"",
+        "DS4_BUILD_CUDA=\\\"13.2\\\"",
+    ],
+    ":cpu_binary": [
+        "DS4_BUILD_BACKEND=\\\"cpu\\\"",
+        "DS4_BUILD_ARCH=\\\"cpu\\\"",
+    ],
+})
+
+# The real git short SHA comes from the stable workspace status (stamp=1, via
+# bazel/stamp_status.sh). We emit a tiny header defining DS4_BUILD_GIT and
+# force-include it when compiling ds4_build.c so a new commit invalidates this
+# action and the SHA stays fresh.
+genrule(
+    name = "build_git_hdr",
+    outs = ["ds4_build_git.h"],
+    cmd = """
+set -eu
+sha="$$(sed -n 's/^STABLE_DS4_BUILD_GIT_SHA //p' bazel-out/stable-status.txt)"
+if [ -z "$$sha" ]; then
+    sha=unknown
+fi
+printf '#define DS4_BUILD_GIT "%s"\\n' "$$sha" > "$@"
+""",
+    stamp = 1,
+)
+
+cc_library(
+    name = "build_stamp",
+    srcs = ["ds4_build.c"],
+    hdrs = [
+        "ds4_build.h",
+        "ds4_build_git.h",
+    ],
+    copts = ds4_c_copts() + ["-include", "ds4_build_git.h"],
+    local_defines = _BUILD_IDENTITY_DEFINES,
+)
+
+cc_library(
+    name = "core",
+    srcs = [
+        "ds4.c",
+        "ds4_image.c",
+        "ds4_distributed.c",
+        "ds4_tp.c",
+        "ds4_ssd.c",
+        "ds4_layer_pack.c",
+        "ds4_engram.c",
+    ],
+    hdrs = glob(["*.h", "*.inc"], allow_empty = True),
+    copts = ds4_c_copts(),
+    local_defines = _GPU_DEFINE,
+)
+
+cc_library(
+    name = "prompt_prefix",
+    srcs = ["ds4_prompt_prefix.c"],
+    hdrs = ["ds4_prompt_prefix.h"],
+    copts = ds4_c_copts(),
+)
+
+cc_library(
+    name = "eval_cases",
+    srcs = ["ds4_eval_cases.c"],
+    hdrs = ["ds4_eval_cases.h"],
+    copts = ds4_c_copts(),
+)
+
+cc_library(
+    name = "net",
+    srcs = ["ds4_web.c", "ds4_kvstore.c", "rax.c"],
+    hdrs = glob(["*.h"]),
+    copts = ds4_c_copts(),
+)
+
+cc_library(
+    name = "repl",
+    srcs = ["linenoise.c"],
+    hdrs = ["linenoise.h"],
+    copts = ds4_c_copts(),
+)
+
+cc_library(
+    name = "help",
+    srcs = ["ds4_help.c"],
+    hdrs = ["ds4_help.h"],
+    copts = ds4_c_copts(),
+)
+
+cc_library(
+    name = "gpu_args",
+    srcs = ["ds4_gpu_args.c"],
+    hdrs = glob(["ds4_gpu*.h"]),
+    copts = ds4_c_copts(),
+    local_defines = _GPU_DEFINE,
+)
+
+cuda_library(
+    name = "cuda",
+    srcs = ["ds4_cuda.cu"],
+    hdrs = glob(["*.h", "*.inc"], allow_empty = True) + glob(["*.cuh"], allow_empty = True),
+    copts = ds4_cuda_copts(),
+    deps = [
+        "//cuda/mmq:mmq",
+        "@cuda//:cublas",
+        "@cuda//:cub",
+    ],
+    tags = ["cuda"],
+)
+
+# CUDA deps key off the same non-overlapping predicate as the identity/DS4_NO_GPU
+# selects above. That avoids Bazel's ambiguous-select behavior for
+# `--config=cuda --//:backend=cpu` and prevents a cuda-stamped binary from being
+# compiled with -DDS4_NO_GPU (or vice versa).
+_CUDA_DEPS = select({
+    ":cuda_enabled_gpu_backend": [
+        ":cuda",
+        "@cuda//:cublas",
+        "@cuda//:cuda_runtime",
+    ],
+    "//conditions:default": [],
+})
+
+cc_binary(
+    name = "ds4",
+    srcs = ["ds4_cli.c"],
+    copts = ds4_c_copts(),
+    local_defines = _GPU_DEFINE,
+    deps = [
+        ":build_stamp",
+        ":core",
+        ":gpu_args",
+        ":help",
+        ":prompt_prefix",
+        ":repl",
+    ] + _CUDA_DEPS,
+    linkopts = ["-lm", "-pthread"],
+)
+
+cc_binary(
+    name = "ds4-server",
+    srcs = ["ds4_server.c"],
+    copts = ds4_c_copts(),
+    local_defines = _GPU_DEFINE,
+    deps = [
+        ":build_stamp",
+        ":core",
+        ":gpu_args",
+        ":help",
+        ":net",
+    ] + _CUDA_DEPS,
+    linkopts = ["-lm", "-pthread"],
+)
+
+cc_binary(
+    name = "ds4-bench",
+    srcs = ["ds4_bench.c"],
+    copts = ds4_c_copts(),
+    local_defines = _GPU_DEFINE,
+    deps = [
+        ":build_stamp",
+        ":core",
+        ":gpu_args",
+        ":help",
+    ] + _CUDA_DEPS,
+    linkopts = ["-lm", "-pthread"],
+)
+
+cc_binary(
+    name = "ds4-eval",
+    srcs = ["ds4_eval.c"],
+    copts = ds4_c_copts(),
+    local_defines = _GPU_DEFINE,
+    deps = [
+        ":build_stamp",
+        ":core",
+        ":eval_cases",
+        ":help",
+    ] + _CUDA_DEPS,
+    linkopts = ["-lm", "-pthread"],
+)
+
+cc_binary(
+    name = "ds4-agent",
+    srcs = ["ds4_agent.c"],
+    copts = ds4_c_copts(),
+    local_defines = _GPU_DEFINE,
+    deps = [
+        ":build_stamp",
+        ":core",
+        ":gpu_args",
+        ":help",
+        ":net",
+        ":prompt_prefix",
+        ":repl",
+    ] + _CUDA_DEPS,
+    linkopts = ["-lm", "-pthread"],
+)
