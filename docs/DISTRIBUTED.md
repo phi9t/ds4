@@ -110,17 +110,17 @@ Build the same commit with `make cuda-spark` on both machines and download
 its runtime library, and an active RoCEv2 link. Check `ibv_devinfo -v` and use
 the addresses of the directly connected ports, not the management network.
 
-For example, with the coordinator at `172.31.250.1` on the direct link:
+For example, with the coordinator at `<COORDINATOR_LINK_IP>` on the direct link:
 
 ```sh
 # Worker.
 ./ds4 --cuda -m gguf/DeepSeek-V4.1-Flash-Q2.gguf --ctx 32768 \
-  --tensor-parallel --role worker --coordinator 172.31.250.1 9911 \
+  --tensor-parallel --role worker --coordinator <COORDINATOR_LINK_IP> 9911 \
   --transport rdma
 
 # Coordinator.
 ./ds4 --cuda -m gguf/DeepSeek-V4.1-Flash-Q2.gguf --ctx 32768 \
-  --tensor-parallel --role coordinator --listen 172.31.250.1 9911 \
+  --tensor-parallel --role coordinator --listen <COORDINATOR_LINK_IP> 9911 \
   --transport rdma
 ```
 

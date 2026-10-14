@@ -3,7 +3,7 @@
 **Status:** Design record (approved in brainstorming, pending spec review)
 **Date:** 2026-08-21
 **Base commit:** `ca17482`
-**Repo:** `/data02/home/philip.yang/workspace/ds4`
+**Repo:** `<HOME_PATH>`
 
 ## Purpose
 

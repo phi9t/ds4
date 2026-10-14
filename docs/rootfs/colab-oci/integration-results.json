@@ -27,7 +27,7 @@
   },
   "status": "passed",
   "scope": "fresh Linux builder integration; no Colab allocation, GPU projection, model inference or registry mutation",
-  "state": "/data02/home/philip.yang/workspace/colab-ds4-rootfs-20261011/ds4-oci-landing-check-5ohf8xid",
+  "state": "<SCRUBBED_WORKDIR>",
   "records": [
     {
       "name": "portable-tests",

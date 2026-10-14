@@ -5,7 +5,7 @@ ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPT="$ROOT/$(basename -- "${BASH_SOURCE[0]}")"
 cd -- "$ROOT"
 
-MODEL="${DS4_MODEL:-/home/antirez/models/deepseek-v4-gguf/DeepSeek-V4-Flash-MXFP4Experts-F16HC-F16Compressor-F16Indexer-Q8Attn-Q8Shared-Q8Out-chat-v2-mxfp4-0731.gguf}"
+MODEL="${DS4_MODEL:-/models/deepseek-v4-gguf/DeepSeek-V4-Flash-MXFP4Experts-F16HC-F16Compressor-F16Indexer-Q8Attn-Q8Shared-Q8Out-chat-v2-mxfp4-0731.gguf}"
 CTX="${DS4_CTX:-100000}"
 SERVER_HOST="${DS4_SERVER_HOST:-0.0.0.0}"
 SERVER_PORT="${DS4_SERVER_PORT:-8000}"

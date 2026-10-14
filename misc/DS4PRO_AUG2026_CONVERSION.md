@@ -9,9 +9,9 @@ DeepSeek V4 Pro checkpoint.
   `deepseek-ai/DeepSeek-V4-Pro-0813` on 2026-08-13. The conversion is pinned to
   revision `72e1d3230f6c080a530b0a1d46f8eb4602340597`: 92 files totaling
   892,762,497,859 bytes, including 66 safetensor shards totaling
-  892,744,322,880 bytes. The download to `mac-m5max-us` completed and passed
+  892,744,322,880 bytes. The download to `<PRIVATE_HOST>` completed and passed
   the pinned size manifest on 2026-08-15.
-- `/Users/antirez/ds4-pro-0813/monitor_download.py` checks the download every
+- `<HOME_PATH> checks the download every
   five minutes. It writes `logs/READY_FOR_CONVERSION` only after the downloader
   exits successfully and all 92 file sizes, the 66-shard index, and incomplete
   download state validate against the pinned manifest. Do not start conversion
@@ -45,7 +45,7 @@ DeepSeek V4 Pro checkpoint.
 ## Rules
 
 - Do the download, conversion, imatrix collection, and validation only on
-  `mac-m5max-us`.
+  `<PRIVATE_HOST>`.
 - The target is the GA checkpoint reported by the DeepSeek API as
   `DeepSeek-V4-Pro-0813`.
 - Pin the exact source revision before downloading any weights. Record the
@@ -86,12 +86,12 @@ still be the only large job running on the host.
 ## Paths On The M5 Max US
 
 ```text
-source:       /Users/antirez/ds4-pro-0813/hf/DeepSeek-V4-Pro-0813
-work:         /Users/antirez/ds4-pro-0813/work
-logs:         /Users/antirez/ds4-pro-0813/logs
-DS4 tree:     /Users/antirez/ds4-pro-0813/ds4-src
-old template: /Users/antirez/ds4/gguf/DeepSeek-V4-Pro-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-Instruct-imatrix.gguf
-final GGUF:   /Users/antirez/ds4/gguf/DeepSeek-V4-Pro-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-Instruct-imatrix-0813.gguf
+source:       <HOME_PATH>
+work:         <HOME_PATH>
+logs:         <HOME_PATH>
+DS4 tree:     <HOME_PATH>
+old template: <HOME_PATH>
+final GGUF:   <HOME_PATH>
 ```
 
 At preparation time the machine had about 1.7 TiB free. The old PRO template
@@ -118,18 +118,18 @@ Before downloading:
 5. Sum all source file sizes and check peak disk use before starting.
 
 Use the isolated downloader already installed at
-`/Users/antirez/ds4-pro-0813-venv/bin/hf`. Pass the pinned revision explicitly
+`<HOME_PATH>`. Pass the pinned revision explicitly
 and download to the source path above. Preserve the downloader log and verify
 that all files named by `model.safetensors.index.json` exist at their declared
 sizes before conversion.
 
 ## 2. Build The Provisional Q2
 
-Update `/Users/antirez/ds4` to the intended DS4 revision and build the runtime
+Update `<HOME_PATH>` to the intended DS4 revision and build the runtime
 and quantizer without warnings:
 
 ```sh
-cd /Users/antirez/ds4
+cd <HOME_PATH>
 make clean && make
 make -C gguf-tools clean all
 ```
@@ -149,9 +149,9 @@ Run:
 
 ```sh
 gguf-tools/deepseek4-quantize \
-  --hf /Users/antirez/ds4-pro-0813/hf/DeepSeek-V4-Pro-0813 \
+  --hf <HOME_PATH> \
   --template gguf/DeepSeek-V4-Pro-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-Instruct-imatrix.gguf \
-  --out /Users/antirez/ds4-pro-0813/work/DeepSeek-V4-Pro-0813-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-Instruct-provisional.gguf \
+  --out <HOME_PATH> \
   --threads 24
 ```
 
@@ -197,13 +197,13 @@ cache and preserve elapsed time, processed token count, cache settings, and
 prefill speed:
 
 ```sh
-cd /Users/antirez/ds4
+cd <HOME_PATH>
 ./ds4 \
-  -m /Users/antirez/ds4-pro-0813/work/DeepSeek-V4-Pro-0813-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-Instruct-provisional.gguf \
+  -m <HOME_PATH> \
   --ssd-streaming \
   --ssd-streaming-cache-experts 48GB \
   --imatrix-dataset gguf-tools/imatrix/dataset/rendered_prompts.txt \
-  --imatrix-out /Users/antirez/ds4-pro-0813/work/DeepSeek-V4-Pro-0813-imatrix-probe.dat \
+  --imatrix-out <HOME_PATH> \
   --imatrix-max-prompts 1 \
   --imatrix-max-tokens 512 \
   --ctx 4096
@@ -232,7 +232,7 @@ memory was 38.51 GB, and the run performed no swap operations.
 Write the selected matrix to:
 
 ```text
-/Users/antirez/ds4-pro-0813/work/DeepSeek-V4-Pro-0813-Instruct-routed-moe-ds4.dat
+<HOME_PATH>
 ```
 
 Require entries for all 61 PRO routed layers and all three routed tensor
@@ -245,12 +245,12 @@ Use the validated provisional GGUF as the template so that the final metadata
 comes from the 0813 conversion, not from the preview file:
 
 ```sh
-cd /Users/antirez/ds4-pro-0813/ds4-src
+cd <HOME_PATH>
 gguf-tools/deepseek4-quantize \
-  --hf /Users/antirez/ds4-pro-0813/hf/DeepSeek-V4-Pro-0813 \
-  --template /Users/antirez/ds4-pro-0813/work/DeepSeek-V4-Pro-0813-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-Instruct-provisional.gguf \
-  --out /Users/antirez/ds4/gguf/DeepSeek-V4-Pro-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-Instruct-imatrix-0813.gguf \
-  --imatrix /Users/antirez/ds4-pro-0813/work/DeepSeek-V4-Pro-0813-Instruct-routed-moe-ds4.dat \
+  --hf <HOME_PATH> \
+  --template <HOME_PATH> \
+  --out <HOME_PATH> \
+  --imatrix <HOME_PATH> \
   --imatrix-strict \
   --threads 24
 ```
@@ -307,7 +307,7 @@ preview fixture reports `fp_9954b31ca7_prod0820_fp8_kvcache_20260402`.
 ## 6. Validation
 
 All model work and model execution in this runbook remains on
-`mac-m5max-us`.
+`<PRIVATE_HOST>`.
 
 1. Record final byte size and SHA-256.
 2. Compare metadata, tensor names, dimensions, and tensor-type counts with the
@@ -321,9 +321,9 @@ All model work and model execution in this runbook remains on
 
    ```sh
    gguf-tools/quality-testing/score_official \
-     /Users/antirez/ds4/gguf/DeepSeek-V4-Pro-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-Instruct-imatrix-0813.gguf \
+     <HOME_PATH> \
      gguf-tools/quality-testing/data/pro-0813/manifest.tsv \
-     /Users/antirez/ds4-pro-0813/logs/pro-0813-quality.tsv \
+     <HOME_PATH> \
      4096 \
      --ssd-streaming \
      --ssd-streaming-cache-experts 48GB
@@ -335,7 +335,7 @@ All model work and model execution in this runbook remains on
    material quality regression; otherwise keep the provisional file and
    investigate the calibration budget before publishing.
 7. Preserve the conversion log, imatrix log, scorer output, checksums, source
-   revision, and disk-cleanup record under `/Users/antirez/ds4-pro-0813/logs`.
+   revision, and disk-cleanup record under `<HOME_PATH>`.
 
 The final and provisional scorers both completed all 100 cases without swap
 operations. The direct comparison is preserved in

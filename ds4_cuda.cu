@@ -972,8 +972,8 @@ static inline cublasHandle_t cuda_cublas_for_tier(int logical_tier) {
  *
  * Design ported from the Entrpi/ds4 batched-serving fork's per-layer
  * decode graph work (fork commits abe26575, 2200c675, 9caaa508; author
- * Entrpi <entrpi@proton.me>), re-implemented against upstream's decode
- * body.  Phase 1 captures the two position-independent islands of each
+ * Entrpi), re-implemented against upstream's decode body.  Phase 1 captures
+ * the two position-independent islands of each
  * decode layer:
  *   island 0: layer top (hc pre-norm, mixes, QKV projections), ending
  *             before the position-dependent QKV rope.
@@ -1235,8 +1235,8 @@ extern "C" int ds4_gpu_decode_graph_end(const ds4_decode_graph_key *key) {
  * Vendored llama.cpp mmq prefill tier (cuda/mmq/, see cuda/mmq/VENDOR.md).
  *
  * Ported from the Entrpi/ds4 batched-serving fork (fork commits 39d3877c,
- * a56e07a5, 944482d5 and the Phase 5/6 MoE wiring; author Entrpi
- * <entrpi@proton.me>).  Phase 1 takes only the RAW-layout entries: dense
+ * a56e07a5, 944482d5 and the Phase 5/6 MoE wiring; author Entrpi).  Phase 1
+ * takes only the RAW-layout entries: dense
  * Q8_0 GEMMs and the IQ2_XXS gate/up + Q2_K down routed-MoE pipeline for
  * n_tok >= 2 (prefill and batched verify).  The aligned-SoA / D2R /
  * producer-quantized tiers and the weight server are deliberately left

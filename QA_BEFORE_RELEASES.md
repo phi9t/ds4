@@ -16,12 +16,12 @@ manual run. Report skipped checks and unresolved failures explicitly.
 
 Preferred release test hosts:
 
-- CUDA / DGX Spark: `antirez@dgxspark1` and `antirez@dgxspark2`.
+- CUDA / DGX Spark: `<SSH_ENDPOINT>` and `<SSH_ENDPOINT>`.
   Use their direct 200 Gb/s RoCE link for network TP, not the VPN or WiFi.
-- Metal / distributed Mac testing: `mac-m5max-it` and `mac-m5max-us`.
-- ROCm: The Strix Halo system at antirez@strixhalo (Framework Desktop).
+- Metal / distributed Mac testing: `<PRIVATE_HOST>` and `<PRIVATE_HOST>`.
+- ROCm: The Strix Halo system at <SSH_ENDPOINT> (Framework Desktop).
 
-`192.168.60.250` is permission-only. Never connect to it for QA, stop or start
+`<PRIVATE_IP>` is permission-only. Never connect to it for QA, stop or start
 its server, build there, or run tests or benchmarks there without asking
 Salvatore and receiving explicit permission for that specific QA pass. Earlier
 permission does not carry over to later work.
@@ -58,7 +58,7 @@ in this system.
   `make clean && make` on Metal,
   `make clean && make cuda-spark` on DGX Spark,
   `make clean && make cuda-generic CUDA_HOME=/usr` on the multi-GPU CUDA host
-  only after receiving permission for `192.168.60.250`,
+  only after receiving permission for `<PRIVATE_IP>`,
   `make clean && make strix-halo` on Strix Halo.
 - Run whitespace checks before committing:
   `git diff --check`.
@@ -271,11 +271,11 @@ operation order, so `output_match=0` against the baseline is diagnostic rather
 than a failure. `--dspark-strict` remains the byte-identical target-only mode.
 
 - Default greedy acceptance fixture:
-  `DS4_DSPARK_MODEL=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-chat-v2-imatrix-0731.gguf DS4_DSPARK_SUPPORT=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-DSpark-support-0731.gguf make dspark-acceptance`.
+  `DS4_DSPARK_MODEL=<HOME_PATH> DS4_DSPARK_SUPPORT=<HOME_PATH> make dspark-acceptance`.
 - 64-token guardrail:
-  `DS4_DSPARK_FIXTURE_TOKENS=64 DS4_DSPARK_MODEL=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-chat-v2-imatrix-0731.gguf DS4_DSPARK_SUPPORT=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-DSpark-support-0731.gguf make dspark-acceptance`.
+  `DS4_DSPARK_FIXTURE_TOKENS=64 DS4_DSPARK_MODEL=<HOME_PATH> DS4_DSPARK_SUPPORT=<HOME_PATH> make dspark-acceptance`.
 - Opportunistic sampled acceptance fixture:
-  `DS4_DSPARK_FIXTURE_TEMPERATURE=1 DS4_DSPARK_FIXTURE_TOP_P=0.95 DS4_DSPARK_FIXTURE_MIN_P=0.05 DS4_DSPARK_FIXTURE_SEED=12345 DS4_DSPARK_FIXTURE_TOKENS=32 DS4_DSPARK_MODEL=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-chat-v2-imatrix-0731.gguf DS4_DSPARK_SUPPORT=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-DSpark-support-0731.gguf make dspark-acceptance`.
+  `DS4_DSPARK_FIXTURE_TEMPERATURE=1 DS4_DSPARK_FIXTURE_TOP_P=0.95 DS4_DSPARK_FIXTURE_MIN_P=0.05 DS4_DSPARK_FIXTURE_SEED=12345 DS4_DSPARK_FIXTURE_TOKENS=32 DS4_DSPARK_MODEL=<HOME_PATH> DS4_DSPARK_SUPPORT=<HOME_PATH> make dspark-acceptance`.
   Require proposals, a direct commit, and zero errors. Output identity with the
   baseline is not expected: normally evaluated boundary tokens are sampled,
   while verified DFlash/target greedy matches are committed without sampling.
@@ -289,9 +289,9 @@ than a failure. `--dspark-strict` remains the byte-identical target-only mode.
   histograms must remain within the stated tolerance of the target
   distribution.
 - Fixed-block direct partial commit:
-  `DS4_DSPARK_FIXTURE_CONFIDENCE=0 DS4_DSPARK_FIXTURE_TOKENS=8 DS4_DSPARK_FIXTURE_REQUIRE_PARTIAL=1 DS4_DSPARK_MODEL=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-chat-v2-imatrix-0731.gguf DS4_DSPARK_SUPPORT=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-DSpark-support-0731.gguf make dspark-acceptance`.
+  `DS4_DSPARK_FIXTURE_CONFIDENCE=0 DS4_DSPARK_FIXTURE_TOKENS=8 DS4_DSPARK_FIXTURE_REQUIRE_PARTIAL=1 DS4_DSPARK_MODEL=<HOME_PATH> DS4_DSPARK_SUPPORT=<HOME_PATH> make dspark-acceptance`.
 - DSpark verifier invariant smoke:
-  `DS4_TEST_MODEL=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-IQ2XXS-w2Q2K-AProjQ8-SExpQ8-OutQ8-chat-v2-imatrix-0731.gguf DS4_DSPARK_SUPPORT=/Users/antirez/ds4/gguf/DeepSeek-V4-Flash-DSpark-support-0731.gguf make dspark-verify-depth`.
+  `DS4_TEST_MODEL=<HOME_PATH> DS4_DSPARK_SUPPORT=<HOME_PATH> make dspark-verify-depth`.
 - If shared support-model or verifier structures changed, also run legacy MTP:
   `make mtp-verify-depth` with `DS4_TEST_MTP` set to a one-stage MTP support
   GGUF, or confirm the target skips only because the optional file is missing.
@@ -346,7 +346,7 @@ or backend fallback selection changes.
   The batch oracle needs extra sessions for mixed prefill and serial controls.
   Use an admitted context for its short-prompt checks, then test long contexts
   separately rather than skipping the mixed checks.
-- On `mac-m5max-it` and `mac-m5max-us`, run the same oracle in physical TP mode
+- On `<PRIVATE_HOST>` and `<PRIVATE_HOST>`, run the same oracle in physical TP mode
   over explicit `tcp` and `rdma` transports. Set `DS4_TEST_TP_MODE=leader` on
   the leader and `DS4_TEST_TP_MODE=worker DS4_TEST_TP_LEADER_HOST=HOST` on the
   worker, with a unique `DS4_TEST_TP_PORT`. Run at least 2 and 4 sessions and
@@ -674,13 +674,13 @@ the vision graph, multimodal prompt spans, or image-aware KV identity.
   image in a later turn. Local paths, `file:` URLs, remote URLs, malformed
   base64, unsupported media, more than 16 images, and bodies over 64 MiB must
   return 4xx without reading local files or making network requests.
-- Run Q4 across `mac-m5max-us` and `mac-m5max-it` over explicit TB5 RDMA with
+- Run Q4 across `<PRIVATE_HOST>` and `<PRIVATE_HOST>` over explicit TB5 RDMA with
   `--vision` on both ranks. The leader must encode once, both ranks must keep
   matching multimodal KV state, and the answer must remain correct. Record
   image encode, prefill, first-token, and decode timing separately.
 - Build CPU, CUDA, and ROCm targets warning-free after vision changes. Run the
   encoder comparison, prompt replay test, and six-case server fixture on one
-  DGX Spark and on `strixhalo`; ROCm Q2 must use bounded SSD streaming.
+  DGX Spark and on `<PRIVATE_HOST>`; ROCm Q2 must use bounded SSD streaming.
 
 ## 7. SSD Streaming
 
@@ -829,8 +829,8 @@ or count a pass on another host as resolving that failure.
 ## 8. CUDA / DGX Spark
 
 Before a release, ask the user for CUDA access if it is not already configured.
-Use either DGX Spark / GB10 host, `antirez@dgxspark1` or
-`antirez@dgxspark2`. Do not claim CUDA is release-ready without this pass.
+Use either DGX Spark / GB10 host, `<SSH_ENDPOINT>` or
+`<SSH_ENDPOINT>`. Do not claim CUDA is release-ready without this pass.
 
 Check for existing inference services first. Before stopping one, record its
 process, service or container, model, ports, and exact launch command. Confirm
@@ -843,7 +843,7 @@ Do not use high-performance Hugging Face Xet mode while a model is resident.
   `make clean && make cuda-spark`.
 - Require both the DGX Spark build and the eight-GPU CUDA build to complete
   without compiler warnings. The eight-GPU build is performed only after
-  receiving explicit permission to use `192.168.60.250` for this QA pass.
+  receiving explicit permission to use `<PRIVATE_IP>` for this QA pass.
 - Run:
   `make cuda-regression`.
 - Build and run `tests/test_cuda_pool`, also under Compute Sanitizer.
@@ -920,7 +920,7 @@ Do not use high-performance Hugging Face Xet mode while a model is resident.
   teacher-forced single-token scoring alone.
 - For native MXFP4 changes, run
   `make test-mxfp4-cuda CUDA_ARCH=native` on the multi-GPU CUDA host only after
-  receiving explicit permission for `192.168.60.250`, and
+  receiving explicit permission for `<PRIVATE_IP>`, and
   `make test-mxfp4-cuda CUDA_ARCH=sm_121` on DGX Spark. Dense MMQ, routed MMQ,
   routed MMVQ, fused gate/up, and fused down must pass, including odd rows,
   K=256/768 and large batches. Require the same Q8-activation accuracy bounds
@@ -988,8 +988,8 @@ Do not use high-performance Hugging Face Xet mode while a model is resident.
 
 ## 9. ROCm / Strix Halo
 
-Use the Strix Halo Framework Desktop via the VPN hostname `strixhalo`
-(`antirez@strixhalo`).  This host validates the ROCm backend; do not use it as
+Use the Strix Halo Framework Desktop via the VPN hostname `<PRIVATE_HOST>`
+(`<SSH_ENDPOINT>`).  This host validates the ROCm backend; do not use it as
 a substitute for CUDA or Metal release testing.
 
 - Fetch or push the exact release commit to the Strix Halo machine.
@@ -1089,7 +1089,7 @@ Distributed code has regressed around route setup, KV snapshots, request IDs,
 and split model loading.  Test it whenever distributed, KV, session, or model
 loading code changes.
 
-- Prefer `mac-m5max-it` and `mac-m5max-us` for Metal distributed tests.  Use the
+- Prefer `<PRIVATE_HOST>` and `<PRIVATE_HOST>` for Metal distributed tests.  Use the
   TB5 point-to-point link when it is working; otherwise note that the run used
   WiFi/VPN routing.
 - Start workers first, then the coordinator.
@@ -1492,7 +1492,7 @@ context sweeps and memory limits.
 | 8x L40S, CUDA TP | Flash Q4, 2048-token prefill benchmark | 1524.84 t/s | 46.93 t/s |
 | 8x L40S, CUDA TP | Flash Q4, 16-row decode oracle | - | 126.0 aggregate t/s |
 
-The 8x L40S values are retained from the last recorded run on `192.168.60.250`.
+The 8x L40S values are retained from the last recorded run on `<PRIVATE_IP>`.
 They are historical references only: never connect to that host or interrupt
 its production server without explicit permission for the current QA pass. If
 permission is granted, the existing hard floor remains 110 aggregate t/s for
@@ -1746,7 +1746,7 @@ Exclude loading. Only the first row is initial prefill; later rows are appends.
 ### CUDA SSD Streaming
 
 V4.1 CUDA starts with text inference on a single DGX Spark. Test on
-`toor@192.168.4.180` and `toor@192.168.4.181`, one model process per host.
+`<SSH_ENDPOINT>` and `<SSH_ENDPOINT>`, one model process per host.
 Never load this Q2 model resident on a 128 GB Spark. Its 341 GiB file includes
 189 GiB of disk-only Engram; the remaining weights still exceed RAM.
 

@@ -14,7 +14,7 @@ separate artifact.
 From this repository:
 
 ```sh
-cd /data02/home/philip.yang/workspace/ds4
+cd /path/to/ds4
 python3 scripts/rootfs/a100_oci/make_colab_upload.py --force
 ```
 

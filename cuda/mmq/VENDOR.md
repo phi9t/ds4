@@ -106,7 +106,7 @@ When upstream lands a bugfix or perf improvement we want, the procedure is:
 
 ```sh
 cd /tmp/llama-research && git fetch && git checkout <NEW_COMMIT>
-cd /Users/ent/code/ds4-mmq-lift/cuda/mmq
+cd <HOME_PATH>
 cp /tmp/llama-research/ggml/src/ggml-cuda/{mmq.cuh,mma.cuh,vecdotq.cuh,quantize.cuh,quantize.cu,mmid.cuh,mmid.cu,common.cuh} .
 cp /tmp/llama-research/ggml/src/ggml-common.h .
 cp /tmp/llama-research/ggml/src/ggml-cuda/vendors/cuda.h vendors/
